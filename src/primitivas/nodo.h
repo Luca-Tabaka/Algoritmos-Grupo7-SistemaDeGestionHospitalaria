@@ -24,5 +24,5 @@ public:
 
     Nodo<T>* obtener_siguiente();
 };
-
+#include"nodo.tpp"
 #endif // NODO_H_INCLUDED

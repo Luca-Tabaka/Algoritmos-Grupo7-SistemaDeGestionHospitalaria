@@ -42,4 +42,6 @@ private:
     Nodo<T>* obtener_nodo(int pos);
 };
 
+#include"lista.tpp"
+
 #endif // LISTA_H_INCLUDED
