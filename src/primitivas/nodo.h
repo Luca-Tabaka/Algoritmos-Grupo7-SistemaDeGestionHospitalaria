@@ -1,29 +1,28 @@
 #ifndef NODO_H_INCLUDED
 #define NODO_H_INCLUDED
 
-typedef int Dato;
-
+template <typename T>
 class Nodo
 {
 private:
     // atributos
-    Dato dato;
-    Nodo* siguiente;
+    T dato;
+    Nodo<T>* siguiente;
 
 public:
     // metodos
     // constructor
     // PRE:
-    // POS: crea un nodo con dato = d y siguiente = 0
-    Nodo(Dato d);
+    // POS: crea un nodo con dato de tipo T y valor = d y siguiente = nullptr
+    Nodo(const T& dato);
 
-    void cambiar_dato(Dato d);
+    void cambiar_dato(T dato);
 
-    void cambiar_siguiente(Nodo* s);
+    void cambiar_siguiente(Nodo<T>* s);
 
-    Dato obtener_dato();
+    T obtener_dato();
 
-    Nodo* obtener_siguiente();
+    Nodo<T>* obtener_siguiente();
 };
 
 #endif // NODO_H_INCLUDED

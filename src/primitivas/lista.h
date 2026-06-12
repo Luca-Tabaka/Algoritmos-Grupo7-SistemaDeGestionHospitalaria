@@ -3,12 +3,12 @@
 #include <iostream>
 #include "nodo.h"
 using namespace std;
-
+template<typename T>
 class Lista
 {
 private:
     // atributos
-    Nodo* primero;
+    Nodo<T>* primero;
     int largo;
 
 public:
@@ -19,7 +19,7 @@ public:
     // pre: 0 < pos <= cantidad + 1
     // pos: inserta el dato d en la posicion pos, la 1 es la primera
     //        ademas incrementa cantidad en 1
-    void alta(int d, int pos);
+    void alta(T d, int pos);
 
     // pre: 0 < pos <= cantidad
     // pos: saca el elemento que esta en pos
@@ -27,7 +27,7 @@ public:
 
     // pre: 0 < pos <= cantidad
     // pos: devuelve el elemento que esta en pos
-    int consulta(int pos);
+    T consulta(int pos);
 
     bool vacia();
 
@@ -39,7 +39,7 @@ public:
     void mostrar();
 
 private:
-    Nodo* obtener_nodo(int pos);
+    Nodo<T>* obtener_nodo(int pos);
 };
 
 #endif // LISTA_H_INCLUDED

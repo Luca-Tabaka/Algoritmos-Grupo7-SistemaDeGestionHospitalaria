@@ -1,19 +1,19 @@
 #include "lista.h"
-
-Lista::Lista()
+template<typename T>
+Lista<T>::Lista()
 {
     primero = 0;
     largo = 0;
 }
-
-bool Lista::vacia()
+template<typename T>
+bool Lista<T>::vacia()
 {
     return (largo == 0);
 }
-
-void Lista::alta(Dato d, int pos)
+template<typename T>
+void Lista<T>::alta(T d, int pos)
 {
-    Nodo* nuevo = new Nodo(d); // crea el nuevo nodo en el cual dentro se guarda el dato d 
+    Nodo<T>* nuevo = new Nodo<T>(d); // crea el nuevo nodo en el cual dentro se guarda el dato d 
     if (pos == 1)
     {
         nuevo->cambiar_siguiente(primero); // el siguiente del nuevo nodo es el primero actual
@@ -21,31 +21,31 @@ void Lista::alta(Dato d, int pos)
     }
     else
     {
-        Nodo* anterior = obtener_nodo(pos - 1); // obtenemos el nodo anterior a la posición donde queremos insertar el nuevo nodo
-        Nodo* siguiente = anterior->obtener_siguiente(); // obtenemos el nodo siguiente al nodo anterior, es decir el nodo que actualmente esta en la posición donde queremos insertar el nuevo nodo
+        Nodo<T>* anterior = obtener_nodo(pos - 1); // obtenemos el nodo anterior a la posición donde queremos insertar el nuevo nodo
+        Nodo<T>* siguiente = anterior->obtener_siguiente(); // obtenemos el nodo siguiente al nodo anterior, es decir el nodo que actualmente esta en la posición donde queremos insertar el nuevo nodo
         nuevo->cambiar_siguiente(siguiente);
         anterior->cambiar_siguiente(nuevo);
     }
     largo++;
 }
-
-Nodo* Lista::obtener_nodo(int pos)
+template<typename T>
+Nodo<T>* Lista<T>::obtener_nodo(int pos)
 {
-    Nodo* aux = primero;
+    Nodo<T>* aux = primero;
     for(int i = 1; i < pos; i++)
         aux = aux->obtener_siguiente();
     return aux;
 }
-
-Dato Lista::consulta(int pos)
+template<typename T>
+T Lista<T>::consulta(int pos)
 {
-    Nodo* aux = obtener_nodo(pos);
+    Nodo<T>* aux = obtener_nodo(pos);
     return aux->obtener_dato();
 }
-
-void Lista::baja(int pos)
+template<typename T>
+void Lista<T>::baja(int pos)
 {
-    Nodo* borrar;
+    Nodo<T>* borrar;
     if (pos == 1)
     {
         borrar = primero;
@@ -53,27 +53,27 @@ void Lista::baja(int pos)
     }
     else
     {
-        Nodo* anterior = obtener_nodo(pos - 1);
+        Nodo<T>* anterior = obtener_nodo(pos - 1);
         borrar = anterior->obtener_siguiente();
-        Nodo* siguiente = borrar->obtener_siguiente();
+        Nodo<T>* siguiente = borrar->obtener_siguiente();
         anterior->cambiar_siguiente(siguiente);
     }
     delete borrar;
     largo--;
 }
-
-Lista::~Lista()
+template<typename T>
+Lista<T>::~Lista()
 {
     while (! vacia())
         baja(1);
 }
-
-int Lista::obtener_largo()
+template<typename T>
+int Lista<T>::obtener_largo()
 {
     return largo;
 }
-
-void Lista::mostrar()
+template<typename T>
+void Lista<T>::mostrar()
 {
       cout<<"[";
 

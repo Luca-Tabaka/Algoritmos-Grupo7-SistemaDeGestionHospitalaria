@@ -1,27 +1,26 @@
 #include "nodo.h"
-
-Nodo::Nodo(Dato d)
+template <typename T>
+Nodo<T>::Nodo(const T& dato){
+        this->dato = dato;
+        this->siguiente = nullptr;
+    };
+template <typename T>
+void Nodo<T>::cambiar_dato(T d)
 {
     dato = d;
-    siguiente = 0;
 }
-
-void Nodo::cambiar_dato(Dato d)
-{
-    dato = d;
-}
-
-void Nodo::cambiar_siguiente(Nodo* s)
+template <typename T>
+void Nodo<T>::cambiar_siguiente(Nodo<T>* s)
 {
     siguiente = s;
 }
-
-Dato Nodo::obtener_dato()
+template <typename T>
+T Nodo<T>::obtener_dato()
 {
     return dato;
 }
-
-Nodo* Nodo::obtener_siguiente()
+template <typename T>
+Nodo<T>* Nodo<T>::obtener_siguiente()
 {
     return siguiente;
 }
