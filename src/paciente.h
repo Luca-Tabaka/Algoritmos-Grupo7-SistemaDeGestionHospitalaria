@@ -1,7 +1,7 @@
 #ifndef PACIENTE_H_
 #define PACIENTE_H_
 #include<string>
-#include<vector>
+
 
 class Paciente{
     private:
