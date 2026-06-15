@@ -5,7 +5,7 @@
 
 class Turno{
     private:
-        int turnoId;
+        int idTurno;
         std:: string codigoHospital;
         int idPaciente;
         int idMedico;

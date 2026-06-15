@@ -23,6 +23,15 @@ std::string Hospital::mostrarInformacion(){
     return mensaje;
 }
 
+bool Hospital::tieneEspecialidad(std::string especialidad){
+    for(int i = 0;i < especialidades.obtener_largo();i++){
+        if(especialidades.consulta(i) == especialidad){
+            return true;
+        }
+    }
+    return false;
+}
+
 int Hospital::pacientesAtendidos(std::string fechaInicio, std::string fechaFin){
     int atendidos = 0;
     for(int i = 0; i < turnos.obtener_largo(); i++){

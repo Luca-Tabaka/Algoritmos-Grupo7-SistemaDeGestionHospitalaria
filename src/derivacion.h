@@ -1,7 +1,6 @@
 #ifndef DERIVACION_H_
 #define DERIVACION_H_
 #include<string>
-#include<vector>
 
 class Derivacion{
     private:
@@ -10,6 +9,9 @@ class Derivacion{
         int tiempoMinutos;
         
     public:
+        std:: string getOrigen();
+        std:: string getDestino();
+        int getTiempo();
 };
 
 #endif

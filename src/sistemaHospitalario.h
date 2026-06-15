@@ -1,6 +1,7 @@
 #ifndef SISTEMAHOSPITALARIO_H_INCLUDED
 #define SISTEMAHOSPITALARIO_H_INCLUDED
 #include"turno.h"
+#include"derivacion.h"
 #include"primitivas/lista.h"
 #include"hospital.h"
 
@@ -8,7 +9,7 @@ class SistemaHospitalario{
     private:
         //listaHash listaHospitales;
         Lista<Turno> turnos;
-        //lista listaDerivaciones;
+        Lista<Derivacion*> listaDerivaciones;
         //ABB diagnosticos;
     public:
         void consultarInformacionHospital(std::string codHospital);

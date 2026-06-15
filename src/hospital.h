@@ -24,6 +24,7 @@ class Hospital{
         int pacientesAtendidos(std::string fechaInicio, std::string fechaFin);
         int cantidadDeCamasDisponibles();
         int cantidadPacientes();
+        bool tieneEspecialidad(std::string especialidad);
         bool tieneSobrecarga();
 
         std::string getNombre();
