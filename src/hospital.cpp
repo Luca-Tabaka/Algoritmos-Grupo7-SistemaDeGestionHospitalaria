@@ -23,6 +23,41 @@ std::string Hospital::mostrarInformacion(){
     return mensaje;
 }
 
+Paciente* Hospital::obtenerPaciente(std::string dni){
+    Paciente* paciente = nullptr;
+    for(int i = 1; i <pacientes.obtener_largo();i++){
+        paciente = pacientes.consulta(i);
+        if(paciente->getDni() == dni){
+            return paciente;
+        }
+    }
+    return nullptr;
+}
+
+Lista<Turno*> Hospital::listarTurnosMedico(int idMedico){
+    Lista<Turno*> turnosMedico;
+    for (int i = 1; i < turnos.obtener_largo() ; i++)
+    {
+        Turno* turno = turnos.consulta(i);
+        if(turno->getIdMedico() == idMedico){
+            turnosMedico.alta(turno, 1);
+        }
+    }
+
+    //ORDENAR POR FECHA
+    return turnosMedico;
+}
+
+Lista<Turno*> Hospital::listarTurnosPaciente(std::string dniPaciente){
+    Lista<Turno*> turnosPaciente;
+    Paciente* paciente = obtenerPaciente(dniPaciente);
+
+    if(paciente == nullptr){
+        std::cout<<"No se encontro un paciente con ese dni";
+    }
+    return turnosPaciente;
+}
+
 bool Hospital::tieneEspecialidad(std::string especialidad){
     for(int i = 0;i < especialidades.obtener_largo();i++){
         if(especialidades.consulta(i) == especialidad){

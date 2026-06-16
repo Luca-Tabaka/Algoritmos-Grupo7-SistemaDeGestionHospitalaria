@@ -1,6 +1,7 @@
 #ifndef HOSPITAL_H_
 #define HOSPITAL_H_
 #include<string>
+#include"paciente.h"
 #include "primitivas/lista.h"
 #include "primitivas/nodo.h"
 #include"turno.h"
@@ -15,6 +16,9 @@ class Hospital{
         int personalMedico;
         double presupuestoAnual;
         Lista<Turno*> turnos;
+        Lista<Paciente*> pacientes;
+
+        Paciente* obtenerPaciente(std::string dni);
 
     public:
         Hospital(std:: string codigoHospital,std:: string nombre, std:: string ciudad, int capacidadCamas, Lista<std::string> especialidades,int personalMedico,double presupuestoAnual);
@@ -32,6 +36,8 @@ class Hospital{
         std:: string getCiudad();
         int getCapacidadCamas();
         Lista<std::string> getEspecialidades();
+        Lista<Turno*> listarTurnosMedico(int idMedico);
+        Lista<Turno*> listarTurnosPaciente(std::string dniPaciente);
         int getPersonalMedico();
         double getPresupuestoAnual();
 };
