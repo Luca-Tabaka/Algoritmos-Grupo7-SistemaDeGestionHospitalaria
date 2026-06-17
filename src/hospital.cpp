@@ -3,13 +3,13 @@
 #include<string>
 
 Hospital::Hospital(std:: string codigoHospital,std:: string nombre, std:: string ciudad, int capacidadCamas, Lista<std::string> especialidades,int personalMedico,double presupuestoAnual){
-    codigoHospital = codigoHospital;
-    nombre = nombre;
-    ciudad = ciudad;
-    capacidadCamas = capacidadCamas;
-    especialidades = especialidades;
-    personalMedico = personalMedico;
-    presupuestoAnual = presupuestoAnual;
+    this->codigoHospital = codigoHospital;
+    this->nombre = nombre;
+    this->ciudad = ciudad;
+    this->capacidadCamas = capacidadCamas;
+    this->especialidades = especialidades;
+    this->personalMedico = personalMedico;
+    this->presupuestoAnual = presupuestoAnual;
 }
 
 std::string Hospital::mostrarInformacion(){
