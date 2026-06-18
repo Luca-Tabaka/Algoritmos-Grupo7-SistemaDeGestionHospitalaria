@@ -12,3 +12,7 @@ Hospital* CeldaHash::getHospital(){
 bool CeldaHash::getEstado(){
     return fueOcupada;
 }
+
+void CeldaHash::borrar(){
+    hospital = nullptr;
+}

@@ -8,6 +8,7 @@ class CeldaHash{
 
     public:
         void addHospital(Hospital* hos);
+        void borrar();
         Hospital* getHospital();
         bool getEstado();
 
