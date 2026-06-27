@@ -1,5 +1,5 @@
 #include"ambulancia.h"
-
+        
 
         float Ambulancia::getCapacidad(){
             return capacidadMaxima;

@@ -8,7 +8,7 @@ class Ambulancia{
         float capacidadMaxima;
         Lista<Insumo*> insumos;
     public:
-        void cargarInsumo(Insumo insumo);
+        void cargarInsumos(Lista<Insumo*> insumos);
 
         float getCapacidad();
         Lista<Insumo*> getInsumos();
