@@ -1,7 +1,7 @@
 #ifndef PACIENTE_H_
 #define PACIENTE_H_
 #include<string>
-#include<vector>
+
 
 class Paciente{
     private:
@@ -14,6 +14,13 @@ class Paciente{
         float peso; 
     
     public:
+        std:: string getodigoHospital();
+        int getIdPaciente();
+        std:: string getDni();
+        std:: string getFechaIngreso(); // aca podria ser date quizas
+        std:: string getDiagnostico();
+        int getPrioridad();
+        float getPeso();
 
 };
 
