@@ -7,7 +7,7 @@ NodoArbol::NodoArbol(string diag, int frec){
     der = nullptr;
 }
 string NodoArbol::getDiagnostico(){
-    return diagnostico
+    return diagnostico;
 }
 int NodoArbol::getFrecuencia(){
     return frecuencia;

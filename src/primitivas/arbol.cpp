@@ -20,6 +20,7 @@ NodoArbol* Arbol::insertar(NodoArbol* nodo, string diag, int frec){
     else{
          nodo-> cambiarDer(insertar(nodo->getDer(),diag,frec));
     }
+    return nodo;
 }
 
 void Arbol::aumentarFrecuencia(string diag){
@@ -63,7 +64,7 @@ int Arbol::altura(NodoArbol* nodo){
         return 0;
     }
     else{
-        return 1 + altura(nodo->getIzq()) + altura(nodo->getDer());
+        return 1 + max(altura(nodo->getIzq()),altura(nodo->getDer()));
     }
 }
 void Arbol::mostrarDiagnosticos(NodoArbol* nodo){
@@ -89,7 +90,7 @@ NodoArbol* Arbol::eliminar(NodoArbol* nodo, int frec){
         nodo->cambiarIzq(eliminar(nodo->getIzq(),frec));
     }
     else if(frec > nodo->getFrecuencia()){
-        nodo->cambiarDer(eliminar(nodo->getIzq(),frec));
+        nodo->cambiarDer(eliminar(nodo->getDer(),frec));
     }
     else{
         //hoja
