@@ -15,8 +15,10 @@ class TablaHash{
         ~TablaHash();
         void vaciar();
         void borrar(std::string clave);
+        Hospital* obtenerHospitalCelda(int pos);
         void insertar(Hospital* hospital);
         Hospital* buscar(std::string clave);
+        int size();
 };
 
 

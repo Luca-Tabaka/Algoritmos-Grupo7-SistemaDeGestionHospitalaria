@@ -1,28 +1,29 @@
 #include"sistemaHospitalario.h"
 #include<iostream>
+using namespace std;
 
-        void SistemaHospitalario::consultarInformacionHospital(std::string codHospital){
-            std::string infoHospital = "";
+        void SistemaHospitalario::consultarInformacionHospital(string codHospital){
+            string infoHospital = "";
             //infoHospital = listaHash.consultar(codHospital)->mostrarInformacion();
-            std::cout<<infoHospital;
+            cout<<infoHospital;
         }
-        void SistemaHospitalario::agregarHospital(Hospital hospital){
-            //listaHash.agregar(hospital);
+        void SistemaHospitalario::agregarHospital(Hospital* hospital){
+            listaHospitales.insertar(hospital);
         }
-        void SistemaHospitalario::eliminarHospital(std::string codigoHospital){
-            //derivarPacientes del hospital
+        void SistemaHospitalario::eliminarHospital(string codigoHospital){
+           listaHospitales.borrar(codigoHospital);
             //eliminar hospital de memoria
             //borrar hospital de lista hash
         }
         void SistemaHospitalario::listarHospitales(){
-            /*Lista<std::string> claves = listaHash.claves()
+            /*Lista<string> claves = listaHash.claves()
             for(int i = 0; i < claves.largo(); i++){
-                std::cout<<listaHash.consultar(claves(i))->mostrarInformacion<<std::endl;
+                cout<<listaHash.consultar(claves(i))->mostrarInformacion<<endl;
             }*/
         }
         //lista SistemaHospitalario::calcularRutaDerivacion(Hospital origen, Hospital destino);
         Lista<Hospital*> SistemaHospitalario::hospitalesConSobrecarga(){
-            //Dijkstra
+        //Dijkstra
         }
         void SistemaHospitalario::listarTurnosMedico(int idMedico){
             //deberia ir en hospital?
@@ -30,15 +31,6 @@
         void SistemaHospitalario::listarTurnosPaciente(int idPaciente){
             //deberia ir en hospital?
         }
-        Lista<Hospital*> SistemaHospitalario::hospitalesPorEspecialidad(std::string especialidad){
+        Lista<Hospital*> SistemaHospitalario::hospitalesPorEspecialidad(string especialidad){
             Lista<Hospital*> hospitales;
-            /*Lista<std::string> claves = listaHash.claves()
-            for(int i = 0; i < claves.largo(); i++){
-                if(listaHash.consultar(claves(i))-> tieneEspecialidad(especialidad)){
-                    std::cout<<listaHash.consultar(claves(i))->mostrarInformacion<<std::endl;
-                }
-                
-            }
-            ordenar hospitales por capacidad de camas    
-            */
         }

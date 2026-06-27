@@ -91,3 +91,9 @@ void TablaHash::borrar(std::string clave){
     }
     return;//si encuentra una posicion vacia y no lo encontro, termina.
 }
+Hospital* TablaHash::obtenerHospitalCelda(int pos){
+    return tabla[pos].getHospital();
+}
+int TablaHash::size(){
+    return capacidad;
+}
