@@ -8,7 +8,7 @@ class Arbol{
         void mostrarDiagnosticos(NodoArbol* nodo);
         NodoArbol* insertar(NodoArbol* nodo, string diag, int frec);
         NodoArbol* minimo(NodoArbol* nodo);
-        NodoArbol* eliminar(NodoArbol* nodo, int frec);
+        NodoArbol* eliminar(NodoArbol* nodo, int frec, string diag);
     public:
         Arbol(){
             raiz = nullptr;
