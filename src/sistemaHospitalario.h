@@ -5,6 +5,7 @@
 #include"derivacion.h"
 #include"primitivas/lista.h"
 #include"hospital.h"
+#include "arbol.h"
 using namespace std;
 
 class SistemaHospitalario{
@@ -12,13 +13,13 @@ class SistemaHospitalario{
         TablaHash listaHospitales;
         Lista<Turno> turnos;
         Lista<Derivacion*> listaDerivaciones;
-        //ABB diagnosticos;
+        Arbol diagnosticos;
     public:
         void consultarInformacionHospital(string codHospital);
         void agregarHospital(Hospital* hospital);
         void eliminarHospital(string codigoHospital);
         void listarHospitales();
-        //lista calcularRutaDerivacion(Hospital origen, Hospital destino);
+        //lista calcularRutaDerivacion(string HospitalOrigen, string Hospitaldestino);
         Lista<Hospital*> hospitalesConSobrecarga();
         void listarTurnosMedico(int idMedico);
         void listarTurnosPaciente(int idPaciente);

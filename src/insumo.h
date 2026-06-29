@@ -10,6 +10,7 @@ class Insumo{
         float peso;
         int prioridad;
     public:
+        Insumo(int id, std::string nom, std::string codHos,float p,int pri);
         int getId();
         std::string getNombre();
         std::string getCodigoHospital();

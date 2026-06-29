@@ -38,6 +38,8 @@ public:
 
     void mostrar();
 
+    void vaciar();
+
 private:
     Nodo<T>* obtener_nodo(int pos);
 };

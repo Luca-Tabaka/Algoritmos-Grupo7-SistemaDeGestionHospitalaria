@@ -64,7 +64,12 @@ void Lista<T>::baja(int pos)
 template<typename T>
 Lista<T>::~Lista()
 {
-    while (! vacia())
+    while (! vacia())   
+        baja(1);
+}
+template<typename T>
+void Lista<T>::vaciar(){
+    while (!vacia())
         baja(1);
 }
 template<typename T>

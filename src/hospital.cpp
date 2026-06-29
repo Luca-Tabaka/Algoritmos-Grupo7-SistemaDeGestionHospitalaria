@@ -12,6 +12,8 @@ Hospital::Hospital(std:: string codigoHospital,std:: string nombre, std:: string
     this->presupuestoAnual = presupuestoAnual;
 }
 
+
+
 std::string Hospital::mostrarInformacion(){
     std::string mensaje = "\n" + codigoHospital +": " + nombre + " - " + ciudad + " - capacidad:"
     + std::to_string(capacidadCamas) + " - especialidades: ";

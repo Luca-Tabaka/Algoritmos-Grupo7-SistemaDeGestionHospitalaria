@@ -1,6 +1,7 @@
 #ifndef HOSPITAL_H_
 #define HOSPITAL_H_
 #include<string>
+#include"insumo.h"
 #include"paciente.h"
 #include "primitivas/lista.h"
 #include "primitivas/nodo.h"
@@ -15,21 +16,24 @@ class Hospital{
         Lista<std::string> especialidades;
         int personalMedico;
         double presupuestoAnual;
+        Lista<Insumo*> insumos;
         Lista<Turno*> turnos;
         Lista<Paciente*> pacientes;
-
         Paciente* obtenerPaciente(std::string dni);
+
+
 
     public:
         Hospital(std:: string codigoHospital,std:: string nombre, std:: string ciudad, int capacidadCamas, Lista<std::string> especialidades,int personalMedico,double presupuestoAnual);
         std:: string mostrarInformacion();
-        //listaPacientes(); este sera de tipo vector con la lista de pacientes
 
         int pacientesAtendidos(std::string fechaInicio, std::string fechaFin);
         int cantidadDeCamasDisponibles();
         int cantidadPacientes();
         bool tieneEspecialidad(std::string especialidad);
         bool tieneSobrecarga();
+
+        Lista<Insumo*> calcularCargaAmbulancia(Lista<Insumo*> insumos, int capacidadMax);
 
         std::string getNombre();
         std:: string getCodigoHospital();
