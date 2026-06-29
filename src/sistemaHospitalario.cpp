@@ -1,7 +1,8 @@
 #include"sistemaHospitalario.h"
 #include<iostream>
 using namespace std;
-
+        SistemaHospitalario::SistemaHospitalario(int cantidad) : listaHospitales(cantidad) {
+        }
         void SistemaHospitalario::consultarInformacionHospital(string codHospital){
             string infoHospital = "";
             //infoHospital = listaHash.consultar(codHospital)->mostrarInformacion();
@@ -9,6 +10,8 @@ using namespace std;
         }
         void SistemaHospitalario::agregarHospital(Hospital* hospital){
             listaHospitales.insertar(hospital);
+            grafoHospitales.agregarVertice(hospital->getCodigoHospital());
+            
         }
         void SistemaHospitalario::eliminarHospital(string codigoHospital){
            listaHospitales.borrar(codigoHospital);
@@ -33,4 +36,16 @@ using namespace std;
         }
         Lista<Hospital*> SistemaHospitalario::hospitalesPorEspecialidad(string especialidad){
             Lista<Hospital*> hospitales;
+        }
+
+        void SistemaHospitalario::verGrafoHospitales(){
+            grafoHospitales.verGrafo();
+        }
+
+        void SistemaHospitalario::conectarHospitales(string origen, string destino, int tiempo){
+            grafoHospitales.agregarArista(origen, destino, tiempo);
+        }
+        
+        void SistemaHospitalario::dijkstra(string origen, string destino){
+            grafoHospitales.dijkstra(origen, destino);
         }

@@ -1,24 +1,25 @@
-/*
- * grafo.h
- *
- *  Created on: 30 May 2026
- *      Author: xenbr
- */
-
 #ifndef GRAFO_H_
 #define GRAFO_H_
-#include<vector>
-#include<string>
-#include "NodoGrafo.h"
-class Grafo{
+#include "nodoGrafo.h"
 
-	private:
-		std::vector<NodoGrafo*> nodos;
-	public:
-		Grafo();
-		void agregarNodo(NodoGrafo* n);
-		std::vector<NodoGrafo*> getNodos();
-		std::string toString();
+class Grafo{
+    private:
+        Lista<NodoGrafo> vertices;
+        void desmarcarVisitados();
+
+    public:
+        // metodo constructor
+        Grafo();
+        // metodo para agregar vertice
+        void agregarVertice(string id);
+        // metodo para agregar arista a un vertice
+        void agregarArista(string origen, string destino, int peso);
+        // metodo para ver las adyacencias que tiene un vertice
+        void verAdyacentes(string id);
+        NodoGrafo* buscarVertice(string id);
+        void verGrafo();
+        void dijkstra(string origen, string destino);
+
 };
 
 

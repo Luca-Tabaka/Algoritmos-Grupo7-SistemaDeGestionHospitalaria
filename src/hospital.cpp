@@ -16,7 +16,7 @@ std::string Hospital::mostrarInformacion(){
     std::string mensaje = "\n" + codigoHospital +": " + nombre + " - " + ciudad + " - capacidad:"
     + std::to_string(capacidadCamas) + " - especialidades: ";
 
-    for(int i = 0; i < especialidades.obtener_largo(); i++){
+    for(int i = 0; i < especialidades.obtenerLargo(); i++){
         mensaje += " - " + especialidades.consulta(i);
     }
     mensaje += " personal: " + std::to_string(personalMedico) + "presupuesto: $" + std::to_string(presupuestoAnual);
@@ -25,7 +25,7 @@ std::string Hospital::mostrarInformacion(){
 
 Paciente* Hospital::obtenerPaciente(std::string dni){
     Paciente* paciente = nullptr;
-    for(int i = 1; i <pacientes.obtener_largo();i++){
+    for(int i = 1; i <pacientes.obtenerLargo();i++){
         paciente = pacientes.consulta(i);
         if(paciente->getDni() == dni){
             return paciente;
@@ -36,7 +36,7 @@ Paciente* Hospital::obtenerPaciente(std::string dni){
 
 Lista<Turno*> Hospital::listarTurnosMedico(int idMedico){
     Lista<Turno*> turnosMedico;
-    for (int i = 1; i < turnos.obtener_largo() ; i++)
+    for (int i = 1; i < turnos.obtenerLargo() ; i++)
     {
         Turno* turno = turnos.consulta(i);
         if(turno->getIdMedico() == idMedico){
@@ -59,7 +59,7 @@ Lista<Turno*> Hospital::listarTurnosPaciente(std::string dniPaciente){
 }
 
 bool Hospital::tieneEspecialidad(std::string especialidad){
-    for(int i = 0;i < especialidades.obtener_largo();i++){
+    for(int i = 0;i < especialidades.obtenerLargo();i++){
         if(especialidades.consulta(i) == especialidad){
             return true;
         }
@@ -69,7 +69,7 @@ bool Hospital::tieneEspecialidad(std::string especialidad){
 
 int Hospital::pacientesAtendidos(std::string fechaInicio, std::string fechaFin){
     int atendidos = 0;
-    for(int i = 0; i < turnos.obtener_largo(); i++){
+    for(int i = 0; i < turnos.obtenerLargo(); i++){
         std::string fecha = turnos.consulta(i)->getFecha();
        if(fechaInicio <=  fecha && fechaFin >= fecha){
         atendidos+=1;
@@ -79,7 +79,7 @@ int Hospital::pacientesAtendidos(std::string fechaInicio, std::string fechaFin){
 }
 
 int Hospital::cantidadPacientes(){
-    return turnos.obtener_largo();
+    return turnos.obtenerLargo();
 }
 
 int Hospital::cantidadDeCamasDisponibles(){
