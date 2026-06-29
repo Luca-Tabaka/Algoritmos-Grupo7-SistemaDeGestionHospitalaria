@@ -16,7 +16,8 @@ class Ambulancia{
             capacidadMaxima = capacidadMax;
             mejorValor = 0;
         }
-        void calcularCarga(Lista<Insumo*>& insumosHospital);
+        void pruebaBacktracking(Lista<Insumo*>& insumosHospital);
+        Lista<Insumo*> calcularCarga(Lista<Insumo*>& insumosHospital);
         void mostrarMejor();
         float getCapacidad() const;
 };

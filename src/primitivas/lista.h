@@ -1,49 +1,53 @@
 #ifndef LISTA_H_INCLUDED
 #define LISTA_H_INCLUDED
 #include <iostream>
-#include "nodo.h"
 using namespace std;
+#include "nodo.h"
 template<typename T>
-class Lista
-{
-private:
-    // atributos
-    Nodo<T>* primero;
-    int largo;
 
-public:
-    // constructor
-    // pos: crea una cola vacia
-    Lista();
+class Lista{
+    private:
+        Nodo<T>* primero; // puntero al primer nodo de la lista
+        int largo;
 
-    // pre: 0 < pos <= cantidad + 1
-    // pos: inserta el dato d en la posicion pos, la 1 es la primera
-    //        ademas incrementa cantidad en 1
-    void alta(T d, int pos);
+        
+    
+    public:
+        // el constructor de lista
+        Lista();
+        //constructor de copia
+        Lista(const Lista<T>& lista);
+        //operador asignacion
+        Lista<T>& operator=(const Lista<T>& lista);
+        // metodo para agregar un nodo a la lista, con la posicion donde guardar
+        void alta(const T& dato, int pos); 
 
-    // pre: 0 < pos <= cantidad
-    // pos: saca el elemento que esta en pos
-    void baja(int pos);
+        // metodo para agregar un nodo en el final de la lista
+        void alta(const T& dato);
 
-    // pre: 0 < pos <= cantidad
-    // pos: devuelve el elemento que esta en pos
-    T consulta(int pos);
+        // metodo para borrar un elemento de la lista dada su posicion
+        void baja(int pos);
 
-    bool vacia();
+        // metodo para obtener el dato de una posicion
+        T& consulta(int pos); 
+        const T& consulta(int pos) const;
+        // metodo para averiguar si en la lista hay elemenos
+        bool esVacia() const;
 
-    // pos: libera la memoria
-    virtual ~Lista();
+        // destructor de la lista
+        ~Lista();
 
-    int obtener_largo();
+        // metodo para conseguir el largo de la lista
+        int obtenerLargo() const;
 
-    void mostrar();
+        void mostrarLista();
+        const Nodo<T>* obtenerNodo(int pos) const;
+        Nodo<T>* obtenerNodo(int pos);
 
-    void vaciar();
+        void vaciar();
 
-private:
-    Nodo<T>* obtener_nodo(int pos);
 };
+#include "lista.tpp"
 
-#include"lista.tpp"
 
 #endif // LISTA_H_INCLUDED

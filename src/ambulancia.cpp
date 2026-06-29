@@ -5,22 +5,19 @@ using namespace std;
 
 int Ambulancia::valorMaximoRestante(int i, Lista<Insumo*>& insumos){
     int suma = 0;
-    for(int j = i; j <= insumos.obtener_largo();j++){
+    for(int j = i; j <= insumos.obtenerLargo();j++){
         suma+= insumos.consulta(j)->getPrioridad();
     }
     return suma;
 }
 
 void Ambulancia::backtrackingPoda(int i, float pesoActual, int valorActual,Lista<Insumo*>& insumosHospital, Lista<Insumo*>& solucionParcial, int& nodosVisitados){
-    int n = insumosHospital.obtener_largo();
+    int n = insumosHospital.obtenerLargo();
+    nodosVisitados++;
     if(i>n){
-        nodosVisitados++;
         if(valorActual > mejorValor){
             mejorValor = valorActual;
-            mejorSolucion.vaciar();
-            for(int i = 1; i <= solucionParcial.obtener_largo();i++){
-                mejorSolucion.alta(solucionParcial.consulta(i),1);
-            }
+            mejorSolucion = solucionParcial;
         }
         return;
     }
@@ -31,10 +28,7 @@ void Ambulancia::backtrackingPoda(int i, float pesoActual, int valorActual,Lista
     if(valorActual + valorMaximoRestante(i,insumosHospital) <= mejorValor){
         return;
     }
-
-
     Insumo* actual = insumosHospital.consulta(i);
-    nodosVisitados++;
     float peso = actual-> getPeso();
     int valor = actual-> getPrioridad();
 
@@ -48,19 +42,15 @@ void Ambulancia::backtrackingPoda(int i, float pesoActual, int valorActual,Lista
 
 }
 void Ambulancia::backtrackingPuro(int i, float pesoActual, int valorActual,Lista<Insumo*>& insumosHospital, Lista<Insumo*>& solucionParcial, int& nodosVisitados){
-    int n = insumosHospital.obtener_largo();
+    int n = insumosHospital.obtenerLargo();
+    nodosVisitados++;
     if(i>n){
-        nodosVisitados++;
         if(valorActual > mejorValor){
             mejorValor = valorActual;
-            mejorSolucion.vaciar();
-            for(int i = 1; i <= solucionParcial.obtener_largo();i++){
-                mejorSolucion.alta(solucionParcial.consulta(i),1);
-            }
+            mejorSolucion = solucionParcial;
         }
         return;
     }
-    nodosVisitados++;
     Insumo* actual = insumosHospital.consulta(i);
     float peso = actual-> getPeso();
     int valor = actual-> getPrioridad();
@@ -75,7 +65,7 @@ void Ambulancia::backtrackingPuro(int i, float pesoActual, int valorActual,Lista
 
 }
 
-void Ambulancia::calcularCarga(Lista<Insumo*>& insumosHospital){
+void Ambulancia::pruebaBacktracking(Lista<Insumo*>& insumosHospital){
     mejorValor = 0;
     mejorSolucion.vaciar();
     int nodosVisitados = 0;
@@ -87,15 +77,25 @@ void Ambulancia::calcularCarga(Lista<Insumo*>& insumosHospital){
     nodosVisitados = 0;
     mejorValor = 0;
     mejorSolucion.vaciar();
-    solucionParcial.vaciar();
-    std::cout << "ANTES PURO" << std::endl;
     backtrackingPuro(1,0,0, insumosHospital,solucionParcial,nodosVisitados);
     std::cout << "Nodos sin poda: " << nodosVisitados << std::endl;
+}
+
+Lista<Insumo*> Ambulancia::calcularCarga(Lista<Insumo*>& insumosHospital){
+    mejorValor = 0;
+    mejorSolucion.vaciar();
+    int nodosVisitados = 0;
+    Lista<Insumo*> solucionParcial;
+    backtrackingPoda(1,0,0, insumosHospital,solucionParcial,nodosVisitados);
+    return mejorSolucion;
 }
 
 float Ambulancia::getCapacidad() const{
     return capacidadMaxima;
 }
-void mostrarMejor(){
-
+void Ambulancia::mostrarMejor(){
+    for(int i = 1;i <= mejorSolucion.obtenerLargo();i++){
+        Insumo* insumoActual = mejorSolucion.consulta(i);
+        cout<<"Insumo: " << insumoActual->getNombre() << " Peso: " << insumoActual->getPeso() << " prioridad: " << insumoActual->getPrioridad() << endl;
+    }
 }
