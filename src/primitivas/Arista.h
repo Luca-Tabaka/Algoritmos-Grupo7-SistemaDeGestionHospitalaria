@@ -1,31 +1,19 @@
-/*
- * arista.h
- *
- *  Created on: 30 May 2026
- *      Author: xenbr
- */
-
-#ifndef ARISTA_H_
-#define ARISTA_H_
-#include<string>
-class NodoGrafo;
-
+#ifndef ARISTA_H
+#define ARISTA_H
+#include <iostream>
+using namespace std;
 class Arista{
-	private:
-		NodoGrafo* origen;
-		NodoGrafo* destino;
-		int peso;
-	public:
-		Arista(NodoGrafo* o,NodoGrafo* d, int p);
-		NodoGrafo* obtenerOrigen();
-		NodoGrafo* obtenerDestino();
-		void setDestino(NodoGrafo* nuevoDestino);
-		void setOrigen(NodoGrafo* nuevoOrigen);
-		int getPeso();
-		void setPeso(int p);
-		std::string toString();
+    private:
+        string destino;
+        int peso;
+
+    public:
+        Arista();
+        Arista(string destino, int peso);
+        string getDestino();
+        int getPeso();
+        void mostrar();
 };
 
 
-
-#endif /* ARISTA_H_ */
+#endif // ARISTA_H

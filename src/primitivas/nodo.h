@@ -2,27 +2,29 @@
 #define NODO_H_INCLUDED
 
 template <typename T>
-class Nodo
-{
-private:
-    // atributos
-    T dato;
-    Nodo<T>* siguiente;
 
-public:
-    // metodos
-    // constructor
-    // PRE:
-    // POS: crea un nodo con dato de tipo T y valor = d y siguiente = nullptr
-    Nodo(const T& dato);
 
-    void cambiar_dato(T dato);
+class Nodo{
+    private:
+        T dato; // dato que guardo
+        Nodo<T>* siguiente; // puntero al nodo siguiente
 
-    void cambiar_siguiente(Nodo<T>* s);
+    public:
+        // creo un nodo con el dato de tipo T y el puntero en 0
+        Nodo(const T& dato); 
 
-    T obtener_dato();
+        // cambio el dato del nodo a un nuevo dato
+        void cambiarDato(const T& dato);
 
-    Nodo<T>* obtener_siguiente();
+        // cambio el puntero que se encuentra en siguiente a uno nuevo
+        void cambiarSiguiente(Nodo<T>* sig);
+
+        // obtengo el dato del nodo
+        T& obtenerDato();
+
+        // obtengo el puntero al nodo que se encuentra en siguiente
+        Nodo<T>* obtenerSiguiente();
+
 };
 #include"nodo.tpp"
 #endif // NODO_H_INCLUDED

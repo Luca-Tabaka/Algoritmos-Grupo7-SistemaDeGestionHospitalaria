@@ -1,6 +1,7 @@
 #include"tablaHash.h"
-TablaHash::TablaHash(int cantElementos){
-    int size = primerPrimoSuperior(cantElementos/0.8);
+
+TablaHash::TablaHash(int cap){
+    int size = primerPrimoSuperior(cap/0.8);
     capacidad = size;
     tabla = new CeldaHash[size];
 }

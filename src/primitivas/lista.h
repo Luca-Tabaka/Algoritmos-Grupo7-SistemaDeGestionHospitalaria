@@ -1,47 +1,47 @@
 #ifndef LISTA_H_INCLUDED
 #define LISTA_H_INCLUDED
 #include <iostream>
-#include "nodo.h"
 using namespace std;
+#include "nodo.h"
 template<typename T>
-class Lista
-{
-private:
-    // atributos
-    Nodo<T>* primero;
-    int largo;
 
-public:
-    // constructor
-    // pos: crea una cola vacia
-    Lista();
+class Lista{
+    private:
+        Nodo<T>* primero; // puntero al primer nodo de la lista
+        int largo;
 
-    // pre: 0 < pos <= cantidad + 1
-    // pos: inserta el dato d en la posicion pos, la 1 es la primera
-    //        ademas incrementa cantidad en 1
-    void alta(T d, int pos);
+        
+    
+    public:
+        // el constructor de lista
+        Lista();
 
-    // pre: 0 < pos <= cantidad
-    // pos: saca el elemento que esta en pos
-    void baja(int pos);
+        // metodo para agregar un nodo a la lista, con la posicion donde guardar
+        void alta(const T& dato, int pos); 
 
-    // pre: 0 < pos <= cantidad
-    // pos: devuelve el elemento que esta en pos
-    T consulta(int pos);
+        // metodo para agregar un nodo en el final de la lista
+        void alta(const T& dato);
 
-    bool vacia();
+        // metodo para borrar un elemento de la lista dada su posicion
+        void baja(int pos);
 
-    // pos: libera la memoria
-    virtual ~Lista();
+        // metodo para obtener el dato de una posicion
+        T& consulta(int pos); 
 
-    int obtener_largo();
+        // metodo para averiguar si en la lista hay elemenos
+        bool esVacia();
 
-    void mostrar();
+        // destructor de la lista
+        ~Lista();
 
-private:
-    Nodo<T>* obtener_nodo(int pos);
+        // metodo para conseguir el largo de la lista
+        int obtenerLargo();
+
+        void mostrarLista();
+        Nodo<T>* obtenerNodo(int pos);
+
 };
+#include "lista.tpp"
 
-#include"lista.tpp"
 
 #endif // LISTA_H_INCLUDED

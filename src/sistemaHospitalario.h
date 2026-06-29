@@ -4,6 +4,7 @@
 #include"tablaHash.h"
 #include"derivacion.h"
 #include"primitivas/lista.h"
+#include"primitivas/Grafo.h"
 #include"hospital.h"
 using namespace std;
 
@@ -12,8 +13,10 @@ class SistemaHospitalario{
         TablaHash listaHospitales;
         Lista<Turno> turnos;
         Lista<Derivacion*> listaDerivaciones;
+        Grafo grafoHospitales;
         //ABB diagnosticos;
     public:
+        SistemaHospitalario(int cantidad);
         void consultarInformacionHospital(string codHospital);
         void agregarHospital(Hospital* hospital);
         void eliminarHospital(string codigoHospital);
@@ -23,6 +26,9 @@ class SistemaHospitalario{
         void listarTurnosMedico(int idMedico);
         void listarTurnosPaciente(int idPaciente);
         Lista<Hospital*> hospitalesPorEspecialidad(string especialidad);
+        void verGrafoHospitales();
+        void conectarHospitales(string origen, string destino, int tiempo);
+        void dijkstra(string origen, string destino);
 };
 
 

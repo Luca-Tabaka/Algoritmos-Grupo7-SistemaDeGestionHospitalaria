@@ -1,41 +1,22 @@
-/*
- * arista.cpp
- *
- *  Created on: 30 May 2026
- *      Author: xenbr
- */
+#include "arista.h"
+using namespace std;
 
-#include"Arista.h"
-#include"NodoGrafo.h"
-Arista::Arista(NodoGrafo* o, NodoGrafo* d, int p){
-	origen = o;
-	destino = d;
-	peso = p;
+
+Arista::Arista(){}
+Arista::Arista(string destino, int peso){
+    this->destino = destino;
+    this->peso = peso;
 }
-NodoGrafo* Arista::obtenerOrigen(){
-	return origen;
-}
-NodoGrafo* Arista::obtenerDestino(){
-	return destino;
-}
-void Arista::setDestino(NodoGrafo* nuevoDestino){
-	destino = nuevoDestino;
-}
-void Arista::setOrigen(NodoGrafo* nuevoOrigen){
-	origen = nuevoOrigen;
+
+
+string Arista::getDestino(){
+    return destino;
 }
 
 int Arista::getPeso(){
-	return peso;
-}
-void Arista::setPeso(int p){
-	peso = p;
+    return peso;
 }
 
-std::string Arista::toString(){
-	std::string mensaje = "\nArista [origen: " + origen->getHospital() + " destino: " + destino->getHospital() + " peso: " + std::to_string(peso) + "]";
-	return mensaje;
+void Arista::mostrar(){
+    cout << "Adyacente: " << destino << " tiempo: " << peso<<" ";
 }
-
-
-
