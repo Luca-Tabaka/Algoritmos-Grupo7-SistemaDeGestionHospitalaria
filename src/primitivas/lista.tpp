@@ -78,6 +78,14 @@ Lista<T>::~Lista(){
 }
 
 template<typename T>
+void Lista<T>::vaciar(){
+    while(!esVacia()){
+        baja(1);
+    }
+}
+
+
+template<typename T>
 int Lista<T>::obtenerLargo()
 {
     return largo;

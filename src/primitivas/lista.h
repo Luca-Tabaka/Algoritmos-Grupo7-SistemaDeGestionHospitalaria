@@ -40,6 +40,8 @@ class Lista{
         void mostrarLista();
         Nodo<T>* obtenerNodo(int pos);
 
+        void vaciar();
+
 };
 #include "lista.tpp"
 
