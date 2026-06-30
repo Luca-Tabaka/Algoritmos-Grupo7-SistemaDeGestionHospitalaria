@@ -35,6 +35,7 @@ class SistemaHospitalario{
         //lista calcularRutaDerivacion(string HospitalOrigen, string Hospitaldestino);
         void hospitalesConSobrecarga(string fecha);
         Lista<Hospital*> hospitalesPorEspecialidad(string especialidad);
+        void agregarEspecialidadesHospital(string codHospital);
 
         //turnos
 

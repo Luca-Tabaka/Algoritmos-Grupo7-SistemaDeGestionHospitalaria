@@ -26,6 +26,26 @@ using namespace std;
             //agregar al txt
             
         }
+
+        void SistemaHospitalario::agregarEspecialidadesHospital(string codHospital){
+            Hospital* hospital = listaHospitales.buscar(codHospital);
+            if (hospital == nullptr)
+            {
+                cout<<"No se encontro el hospital"<<endl;
+                return;
+            }            
+            string especialidad;
+            while(true){
+                cout<<"Ingrese la especialidad a agregar (con x termina)"<<endl;
+                cin>>especialidad;
+                if (especialidad!="x")
+                {
+                    hospital->agregarEspecialidad(especialidad);
+                }else{
+                    break;
+                }
+            }
+        }
         void SistemaHospitalario::eliminarHospital(string codigoHospital){
            Hospital* hospital = listaHospitales.buscar(codigoHospital);
            if (hospital == nullptr)
@@ -50,6 +70,12 @@ using namespace std;
                 }
             }//se cargan los hospitales de la listaHospitales
 
+            if (hospitales.esVacia())
+            {
+                cout<<"No se encontraron hospitales a listar"<<endl;
+                return;
+            }
+            
             insertionSort(hospitales, opcion);//se ordenan con insertion sort dada la opcion
 
             for(int i=1; i<=hospitales.obtenerLargo(); i++){
@@ -66,6 +92,12 @@ using namespace std;
                     hospitales.alta(hospital);
                 }
             }
+            if (hospitales.esVacia())
+            {
+                cout<<"No se encontraron hospitales con esa especialidad."<<endl;
+                return;
+            }
+            
             insertionSort(hospitales, 4);
             for(int i=1; i<=hospitales.obtenerLargo(); i++){
                 Hospital* hospital = hospitales.consulta(i);

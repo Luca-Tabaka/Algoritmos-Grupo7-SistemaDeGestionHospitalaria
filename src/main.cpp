@@ -41,161 +41,286 @@ void insertarHospitalesEnTxt(TablaHash& listaHospitales) {
 }
 
 
-int main(){
-    SistemaHospitalario sistema(100);
-/* 
-    sistema.agregarHospital(new Hospital("H001", "Hospital A", "Ciudad A", 100, Lista<std::string>(), 50, 1000000.0));
-    sistema.agregarHospital(new Hospital("H002", "Hospital B", "Ciudad B", 150, Lista<std::string>(), 75, 1500000.0));
-    sistema.conectarHospitales("H001", "H002", 10);
-    sistema.verGrafoHospitales(); */
-    
-    Paciente* paciente1 = new Paciente("H001", 101, "12345678", "20250304", "Consultas", 1, 70.5);
-    Paciente* paciente2 = new Paciente("H001", 102, "87654321", "20250305", "Examen", 2, 65.0);
-
-
-    // creacion de listas para hospital
-    Lista<string> especialidad;
-    especialidad.alta("Cardiologia");
-    especialidad.alta("Neurologia");
-    Lista<string> especialidad2;
-    especialidad2.alta("Pediatria");
-    Lista<string> especialidad3;
-    especialidad3.alta("Cardiologia");
-    especialidad3.alta("Pediatria");
-
-    Hospital *hospital1 = new Hospital("H001", "Hospital A", "Ciudad A", 100, especialidad, 50, 1000000.0);
-
-    hospital1->agregarPaciente(paciente1);
-    hospital1->agregarPaciente(paciente2);
-
-    sistema.agregarHospital(hospital1);
-    sistema.agregarHospital(new Hospital("H002", "Hospital B", "Ciudad B", 150, especialidad2, 75, 1500000.0));
-    sistema.agregarHospital(new Hospital("H003", "Hospital C", "Ciudad C", 100, especialidad3, 100, 2000000.0));
-    sistema.agregarHospital(new Hospital("H004", "Hospital D", "Ciudad D", 250, especialidad, 125, 2500000.0));
-    sistema.conectarHospitales("H001", "H002", 10);
-    sistema.conectarHospitales("H001", "H003", 5);
-    sistema.conectarHospitales("H002", "H003", 3);
-
-
-    hospital1->agregarTurno(new Turno(1, "H001", 101, 201, "20250709", "Cardiologia", 30));
-    hospital1->agregarTurno(new Turno(2, "H001", 101, 201, "20250708", "Pediatria", 60));
-    hospital1->agregarTurno(new Turno(3, "H001", 101, 202, "20251008", "Control", 60));
-
-
-    hospital1->agregarTurno(new Turno(2, "H001", 102, 202, "20250507", "Neurologia", 45));
-
-    hospital1->listarTurnosPaciente("87654321");
-
-    sistema.verGrafoHospitales();
-    sistema.hospitalesConSobrecarga("20250709");
-    //sistema.calcularCaminoHospitales("H001","H002");
-    /* Lista<string>h=sistema.hospitalesMasCercanos("H001");
-    for (int i = 1; i <= h.obtenerLargo(); i++)
-    {
-        cout<<h.consulta(i)<<endl;
-    } */
-    
-
-
-    //sistema.dijkstra("H001", "H002");
-//-----------------------------------------------------------------------------------(ARBOLES)
-/*         // Insertar diagnósticos
-    sistema.insertarDiagnostico("Gripe", 15);
-    sistema.insertarDiagnostico("Covid-19", 40);
-    sistema.insertarDiagnostico("Neumonia", 25);
-    sistema.insertarDiagnostico("Diabetes", 18);
-    sistema.insertarDiagnostico("Hipertension", 30);
-
-    // Mostrar el árbol (inorden)
-    cout << "\n=== Diagnósticos ===\n";
-    sistema.listarDiagnosticos();
-
-    // Obtener el diagnóstico más frecuente
-    cout << "\n=== Diagnóstico más frecuente ===\n";
-    sistema.diagnosticoMasFrecuente();
-
-    // Incrementar la frecuencia de un diagnóstico
-    cout << "\n=== Incrementar frecuencia de Gripe ===\n";
-    sistema.incrementarFrecuencia("Gripe");
-    sistema.incrementarFrecuencia("Gripe");
-    sistema.incrementarFrecuencia("Gripe");
-
-    // Ver nuevamente el más frecuente
-    sistema.diagnosticoMasFrecuente();
-
-    // Eliminar un diagnóstico
-    cout << "\n=== Eliminar Diabetes ===\n";
-    sistema.eliminarDiagnostico("Diabetes");
-
-    // Mostrar el árbol luego de eliminar
-    cout << "\n=== Diagnósticos luego de eliminar ===\n";
-    sistema.listarDiagnosticos();
-
-    // Verificar balance
-    cout << "\n=== Estado del árbol ===\n";
-    sistema.arbolDesbalanceado();
-    // Diagnóstico repetido
-    sistema.insertarDiagnostico("Covid-19", 50);
-
-    // Diagnóstico inexistente
-    sistema.incrementarFrecuencia("Dengue");
-
-    // Eliminar diagnóstico inexistente
-    sistema.eliminarDiagnostico("Cancer");
-
-    // Árbol vacío
-    SistemaHospitalario vacio(10);
-    vacio.diagnosticoMasFrecuente();
-    vacio.eliminarDiagnostico("Covid-19");
-    vacio.arbolDesbalanceado();
- */
-
-    //---------------------------------------------------------------------------------------------------------------------
-    //hospital1->agregarTurno(new Turno(3, "H001", 103, 203, "20270508", "Pediatria", 60));
-    
-    //cout << hospital1->pacientesAtendidos("20250101", "20260512") << endl;
-    //sistema.consultarInformacionHospital("H001");
-
-/*     sistema.verGrafoHospitales();
-    sistema.eliminarHospital("H001");
-    sistema.verGrafoHospitales(); */
-
-    //sistema.listarHospitales(1); // Ordenar por capacidad de camas
-    //sistema.listarHospitalesPorEspecialidad("Pediatria");
+int menuPrincipal(){
+    int eleccion;
+    cout<<"Menu de gestion de hospitales: "<<endl;
+    cout<<"1. Mostrar informacion de un hospital"<<endl;
+    cout<<"2. Agregar hospital al sistema"<<endl;
+    cout<<"3. Eliminar hospital existente"<<endl;
+    cout<<"4. Listar todos los hospitales por especificacion"<<endl;
+    cout<<"5. Calcular ruta de derivacion entre dos hospitales"<<endl;
+    cout<<"6. Buscar hospitales por especialidad"<<endl;
+    cout<<"7. Listar hospitales con sobrecarga"<<endl;
+    cout<<"8. Gestionar Hospital"<<endl;
+    cout<<"8. Gestionar diagnosticos"<<endl;
+    cout<<"0. Volver"<<endl;
+    cin>>eleccion;
+    return eleccion;
 }
 
-/* int main() {
-    TablaHash listaHospitales(100);
-    Grafo grafoHospitales;
-    Hospital* hospital1 = new Hospital("H001", "Hurlingham", "Ciudad A", 100, Lista<std::string>(), 50, 1000000.0);
-    Hospital* hospital2 = new Hospital("H002", "Moron", "Ciudad B", 150, Lista<std::string>(), 75, 1500000.0);
 
-    grafoHospitales.agregarVertice(hospital1->getCodigoHospital());
-    grafoHospitales.agregarVertice(hospital2->getCodigoHospital());
+int menuHospital(){
+    int eleccion;
+    cout<<"Menu de sistema hospitalario: "<<endl;
+    cout<<"1. Gestionar pacientes"<<endl;
+    cout<<"2. Gestionar insumos"<<endl;
+    cout<<"0. Volver"<<endl;
+    cin>>eleccion;
+    return eleccion;    
+}
 
-    grafoHospitales.agregarArista(hospital1->getCodigoHospital(), hospital2->getCodigoHospital(), 10);
-    grafoHospitales.agregarArista(hospital2->getCodigoHospital(), hospital1->getCodigoHospital(), 10);
 
-    grafoHospitales.verGrafo();
 
-    listaHospitales.insertar(hospital1);
-    listaHospitales.insertar(hospital2);
+int menuGestionDePacientesyTurnos(){
+    int eleccion;
+    cout<<"Menu de gestion de pacientes y turnos: "<<endl;
+    cout<<"1. Calcular la cantidad de pacientes atendidos en un rango de fechas"<<endl;
+    cout<<"2. Listar turnos de un paciente"<<endl;
+    cout<<"3. Listar turnos de un medico"<<endl;
+    cout<<"4. Agregar paciente a lista de espera"<<endl;
+    cout<<"5. Atender paciente en lista de espera"<<endl;
+    cout<<"6. Cambiar la prioridad de un paciente"<<endl;
+    cout<<"0. Volver"<<endl;
+    cin>>eleccion;
+    return eleccion;
+}
 
-    insertarHospitalesEnTxt(listaHospitales);
-    agregarHospitalesDesdeTXT(listaHospitales);
-    for (int i = 0; i < listaHospitales.size(); i++) {
+int menuGestionDeDiagnosticos(){
+    int eleccion;
+    cout<<"Menu de gestion de diagnosticos: "<<endl;
+    cout<<"1. Agregar diagnostico"<<endl;
+    cout<<"2. Eliminar diagnostico"<<endl;
+    cout<<"3. Listar diagnosticos"<<endl;
+    cout<<"4. Incrementar frecuencia de diagnostico"<<endl;
+    cout<<"5. Diagnostico mas frecuente"<<endl;
+    cout<<"6. Ver balance de arbol de diagnosticos"<<endl;
+    cout<<"0. Volver"<<endl;
+    cin>>eleccion;
+    return eleccion;
+}
 
-        Hospital* hos = listaHospitales.obtenerHospitalCelda(i);
 
-        
+int menuInsumos(){
+    int eleccion;
+    cout<<"Menu de gestion de insumos: "<<endl;
+    cout<<"1. Calcular carga de ambulancia"<<endl;
+    cout<<"2. Listar insumos"<<endl;
+    cout<<"3. Comparar funciones de backtracking"<<endl;
+    cout<<"0. Volver"<<endl;
+    cin>>eleccion;
+    return eleccion;
+}
 
-        if (hos != nullptr) {
-
-            cout << hos->mostrarInformacion() << endl;
-
+void ejecucionMenuPrincipal(SistemaHospitalario& sistemaPrincipal){
+int opcion;
+    do{
+        opcion = menuPrincipal();
+    switch (opcion)
+    {    case 1:{
+            string codHospital;
+            cout<<"Ingrese el codigo del hospital"<<endl;
+            cin>>codHospital;
+            sistemaPrincipal.consultarInformacionHospital(codHospital);
+            break;
+        }
+        case 2:{
+            //(string codigoHospital, string nombre,  string ciudad, int capacidadCamas, Lista<string> especialidades,int personalMedico,double presupuestoAnual)
+            string codHospital, nombre, ciudad;
+            int camas, personal;
+            double presupuesto;
+            cout<<"Ingrese el codigo de hospital"<<endl;
+            cin>>codHospital;
+            cout<<"Ingrese el nombre del hospital"<<endl;
+            cin>>nombre;
+            cout<<"Ingrese la ciudad"<<endl;
+            cin>>ciudad;
+            cout<<"Ingrese la cantidad de camas"<<endl;
+            cin>>camas;
+            cout<<"Ingrese el cantidad de personal"<<endl;
+            cin>>personal;
+            cout<<"Ingrese el presupuesto anual"<<endl;
+            cin>>presupuesto;
+            sistemaPrincipal.agregarHospital(new Hospital(codHospital,nombre,ciudad,camas,Lista<string>(),personal,presupuesto));
+            sistemaPrincipal.agregarEspecialidadesHospital(codHospital);
+            break;
+        }
+        case 3:{
+            string codHospital;
+            cout<<"Ingrese el codigo del hospital"<<endl;
+            cin>>codHospital;
+            sistemaPrincipal.eliminarHospital(codHospital);
+            break;
+        }
+            
+        case 4:{
+            int especificacion;
+            cout<<"Ingrese la especificacion para listar hospitales (opciones: 1 = camas totales, 2 = personal medico, 3 = presupuesto, 4 = disponibilidad de camas)"<<endl;    
+            cin>>especificacion; 
+            sistemaPrincipal.listarHospitales(especificacion);   
+            break;
+        }
+        case 5:{
+            string origen;
+            cout<<"Ingrese el codigo de hospital de origen"<<endl;   
+            cin>>origen;
+            string destino;
+            cout<<"Ingrese el codigo de hospital de destino"<<endl;   
+            cin>>destino;
+            sistemaPrincipal.calcularCaminoHospitales(origen,destino);
+            break;
         }
 
+        case 6:{
+            string especialidad;
+            cout<<"Ingrese la especialidad para listar"<<endl;    
+            cin>>especialidad; 
+            sistemaPrincipal.listarHospitalesPorEspecialidad(especialidad);  
+            break; 
+        }
+        case 7:{
+            string fecha;
+            cout<<"Ingrese la fecha para listar (AAAAMMDD)"<<endl;    
+            cin>>fecha;             
+            sistemaPrincipal.hospitalesConSobrecarga(fecha);
+            break;
+        }    
+        case 8:{
+            menuHospital();
+            break;
+        }    
+        case 9:{
+            menuGestionDeDiagnosticos();
+            break;
+            
+        }
+    case 0:
+        cout<<"Salio del sistema"<<endl;
+        break;
+    default:
+        cout<<"Opcion no valida, elija nuevamente."<<endl;
+        break;
     }
-return 0;
+} while (opcion != 0);
 }
- */
+
+
+//Hospital
+void ejecucionMenuHospital(SistemaHospitalario& sistemaPrincipal){
+    string codHospital;
+    cout<<"Ingrese el hospital a gestionar"<<endl;
+    cin>>codHospital;
+    Hospital* hospital = sistemaPrincipal.getHospital(codHospital);
+    if (hospital==nullptr)
+    {
+        cout<<"No se encontro el hospital a gestionar."<<endl;
+        return;
+    }
+    int opcion;
+    do{
+    opcion = menuHospital();
+     switch (opcion)
+     {
+     case 1:{
+         
+         break;
+     }
+        
+     
+    case 0:
+        cout<<"Volviendo al menu principal."<<endl;
+        break;
+    default:
+        cout<<"Opcion no valida, elija nuevamente."<<endl;
+        break;
+     }   
+    } while (opcion != 0);
+    
+}
+
+void ejecucionMenuGestionDePacientesyTurnos(SistemaHospitalario& sistemaPrincipal, Hospital* hospital){
+    int opcion;
+    do{
+    opcion = menuGestionDePacientesyTurnos();
+     switch (opcion)
+     {
+     case 1:{
+         
+         break;
+     }
+        
+     
+    case 0:
+        cout<<"Volviendo al menu de hospital."<<endl;
+        break;
+    default:
+        cout<<"Opcion no valida, elija nuevamente."<<endl;
+        break;
+     }   
+    } while(opcion != 0);
+}
+void ejecucionMenuInsumos(SistemaHospitalario& sistemaPrincipal, Hospital* hospital){
+// fin hospital
+
+
+
+    int opcion;
+    do{
+    opcion = menuInsumos();
+     switch (opcion)
+     {
+     case 1:{
+         
+         break;
+     }
+        
+     
+    case 0:
+        cout<<"Volviendo al menu de hospital."<<endl;
+        break;
+    default:
+        cout<<"Opcion no valida, elija nuevamente."<<endl;
+        break;
+     }   
+    } while(opcion != 0);
+}
+
+// fin hospital
+
+
+void ejecucionMenuGestionDeDiagnosticos(SistemaHospitalario& sistemaPrincipal){
+    int opcion;
+    do{
+    opcion = menuGestionDeDiagnosticos();
+     switch (opcion)
+     {
+     case 1:{
+        string diagnostico;
+        cout<<"Ingrese un diagnostico:"<<endl;
+        cin>>diagnostico;
+        int frecuencia;
+        cout<<"Ingrese la frecuencia:"<<endl;
+        cin>>frecuencia;
+
+        sistemaPrincipal.insertarDiagnostico(diagnostico,frecuencia);
+        break;
+     }
+
+    case 2:
+        
+     
+    case 0:
+        cout<<"Volviendo al menu de hospital."<<endl;
+        break;
+    default:
+        cout<<"Opcion no valida, elija nuevamente."<<endl;
+        break;
+     }   
+    } while(opcion != 0);
+}
+
+
+int main(){
+    SistemaHospitalario sistemaPrincipal(100);
+    
+    ejecucionMenuPrincipal(sistemaPrincipal);
+}

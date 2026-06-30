@@ -7,7 +7,7 @@ TablaHash::TablaHash(int cap){
     tabla = new CeldaHash[size];
 }
 
-int TablaHash::hash(string clave){
+int TablaHash::hash(string clave){    
     int c2 = (int) clave[1];
     int c3 = (int) clave[2];
 

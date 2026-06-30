@@ -51,7 +51,7 @@ class Hospital{
 
         void cargaDerivacion(int capacidadMax);
 
-
+        void agregarEspecialidad(string especialidad);
         void agregarTurno(Turno* turno);
         void agregarPaciente(Paciente* paciente);
         void agregarInsumo(Insumo* insumo);

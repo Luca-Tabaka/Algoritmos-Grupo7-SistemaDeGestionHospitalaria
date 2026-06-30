@@ -3,7 +3,7 @@
 #include<string>
 using namespace std;
 
-Hospital::Hospital( string codigoHospital, string nombre,  string ciudad, int capacidadCamas, Lista<string> especialidades,int personalMedico,double presupuestoAnual){
+Hospital::Hospital(string codigoHospital, string nombre,  string ciudad, int capacidadCamas, Lista<string> especialidades,int personalMedico,double presupuestoAnual){
     this->codigoHospital = codigoHospital;
     this->nombre = nombre;
     this->ciudad = ciudad;
@@ -203,6 +203,11 @@ double Hospital::getPresupuestoAnual(){
 void Hospital::agregarPaciente(Paciente* paciente){
     pacientes.alta(paciente,1);
 }
+
+void Hospital::agregarEspecialidad(string especialidad){
+        especialidades.alta(especialidad);
+}
+
 
 void Hospital::agregarTurno(Turno* turno){
     turnos.alta(turno,1);
