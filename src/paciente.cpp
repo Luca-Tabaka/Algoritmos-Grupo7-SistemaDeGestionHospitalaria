@@ -9,19 +9,23 @@
             this->peso = peso;
         }
         
-        std:: string Paciente::getCodigoHospital(){
+        string Paciente::getCodigoHospital(){
             return codigoHospital;
         }
         int Paciente::getIdPaciente(){
             return idPaciente;
         }
-        std:: string Paciente::getDni(){
+        string Paciente::getDni(){
             return dni;
         }
-        std:: string Paciente::getFechaIngreso(){
+        void Paciente::setCodigoHospital(string cod){
+            codigoHospital = cod;
+        }
+
+        string Paciente::getFechaIngreso(){
             return fechaIngreso;
         } 
-        std:: string Paciente::getDiagnostico(){
+        string Paciente::getDiagnostico(){
             return diagnostico;
         }
         int Paciente::getPrioridad(){

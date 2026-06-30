@@ -70,16 +70,16 @@ int main(){
 
     sistema.agregarHospital(hospital1);
     sistema.agregarHospital(new Hospital("H002", "Hospital B", "Ciudad B", 150, especialidad2, 75, 1500000.0));
-    sistema.agregarHospital(new Hospital("H003", "Hospital C", "Ciudad C", 200, especialidad3, 100, 2000000.0));
+    sistema.agregarHospital(new Hospital("H003", "Hospital C", "Ciudad C", 100, especialidad3, 100, 2000000.0));
     sistema.agregarHospital(new Hospital("H004", "Hospital D", "Ciudad D", 250, especialidad, 125, 2500000.0));
     sistema.conectarHospitales("H001", "H002", 10);
     sistema.conectarHospitales("H001", "H003", 5);
     sistema.conectarHospitales("H002", "H003", 3);
 
 
-    hospital1->agregarTurno(new Turno(1, "H001", 101, 201, "20250506", "Cardiologia", 30));
+    hospital1->agregarTurno(new Turno(1, "H001", 101, 201, "20250709", "Cardiologia", 30));
     hospital1->agregarTurno(new Turno(2, "H001", 101, 201, "20250708", "Pediatria", 60));
-    hospital1->agregarTurno(new Turno(3, "H001", 101, 201, "20251008", "Control", 60));
+    hospital1->agregarTurno(new Turno(3, "H001", 101, 202, "20251008", "Control", 60));
 
 
     hospital1->agregarTurno(new Turno(2, "H001", 102, 202, "20250507", "Neurologia", 45));
@@ -87,13 +87,13 @@ int main(){
     hospital1->listarTurnosPaciente("87654321");
 
     sistema.verGrafoHospitales();
-    
+    sistema.hospitalesConSobrecarga("20250709");
     //sistema.calcularCaminoHospitales("H001","H002");
-    Lista<string>h=sistema.hospitalesMasCercano("H001");
+    /* Lista<string>h=sistema.hospitalesMasCercanos("H001");
     for (int i = 1; i <= h.obtenerLargo(); i++)
     {
         cout<<h.consulta(i)<<endl;
-    }
+    } */
     
 
 

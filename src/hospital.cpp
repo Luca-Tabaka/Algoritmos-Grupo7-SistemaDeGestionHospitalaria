@@ -117,10 +117,15 @@ int Hospital::cantidadDeCamasDisponibles(){
     }
     return capacidadCamas - cantidadPacientes();
 }
+Paciente* Hospital::quitarPaciente(){
+    Paciente* p = pacientes.consulta(1);
+    pacientes.baja(1);
+    return p;
+}
 
 
-bool Hospital::tieneSobrecarga(){
-    return (pacientesAtendidos("2025-05-05","2025-05-12") > 20 || (cantidadDeCamasDisponibles() / capacidadCamas) <= 0.10f);
+bool Hospital::tieneSobrecarga(string fecha){
+    return (pacientesAtendidos(semanaAnterior(fecha),fecha) > 10 || (cantidadDeCamasDisponibles() / (float)capacidadCamas) <= 0.10f);
 }
 
 
@@ -149,6 +154,28 @@ Paciente* Hospital::extraerPacienteListaEspera(){
     listaEspera.pop();
     return primero;
 }
+string Hospital::semanaAnterior(string fecha){
+    tm t = {};
+
+    t.tm_year = stoi(fecha.substr(0,4)) -1900; // agarra los primeros 4 digitos de fecha y le resta 1900 porque tm cuenta desde 1900
+    t.tm_mon = stoi(fecha.substr(4,2)) -1;//resta 1 porque tm cuenta los meses desde el 0
+    t.tm_mday = stoi(fecha.substr(6,2));
+
+    time_t tiempo = mktime(&t);//se transforma a segundos
+    tiempo -= 7*24*60*60; //se resta una semana en segundos
+
+    //hacemos operacion inversa para producir el string de fecha
+    t = *localtime(&tiempo);
+
+    char buffer[9];
+
+    sprintf(buffer,"%04d%02d%02d", t.tm_year + 1900, t.tm_mon+1,t.tm_mday);
+
+    return string(buffer);
+    
+}
+
+
 
 
 string Hospital::getNombre(){

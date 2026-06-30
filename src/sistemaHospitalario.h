@@ -19,6 +19,8 @@ class SistemaHospitalario{
         bool compararHospitales(Hospital* h1, Hospital* h2, int opcion);
         void insertionSort(Lista<Hospital*>& hospitales, int opcion);
         void reasignarPacientes(string origen);
+        void trasladarPaciente(string origen,string destino);
+        string semanaAnterior(string fecha);
 
     public:
         SistemaHospitalario(int cantidad);
@@ -31,18 +33,16 @@ class SistemaHospitalario{
         void listarHospitales(int opcion);
         void listarHospitalesPorEspecialidad(string especialidad);
         //lista calcularRutaDerivacion(string HospitalOrigen, string Hospitaldestino);
-        Lista<Hospital*> hospitalesConSobrecarga();
+        void hospitalesConSobrecarga(string fecha);
         Lista<Hospital*> hospitalesPorEspecialidad(string especialidad);
 
         //turnos
-        void listarTurnosMedico(int idMedico);
-        void listarTurnosPaciente(int idPaciente);
 
         //grafos
         void verGrafoHospitales();
         void conectarHospitales(string origen, string destino, int tiempo);
         void calcularCaminoHospitales(string origen, string destino);
-        Lista<string> hospitalesMasCercano(string origen);
+        Lista<string> hospitalesMasCercanos(string origen);
 
         //diagnosticos
         void insertarDiagnostico(string diag, int frec);

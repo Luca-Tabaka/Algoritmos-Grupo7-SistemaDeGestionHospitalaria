@@ -23,12 +23,9 @@ class Hospital{
         Lista<Turno*> turnos;
         Lista<Paciente*> pacientes;
         PriorityQueue listaEspera;
+        string semanaAnterior(string fecha);
         Paciente* obtenerPaciente(string dni);
         
-
-
-
-
     public:
         Hospital( string codigoHospital, string nombre,  string ciudad, int capacidadCamas, Lista<string> especialidades,int personalMedico,double presupuestoAnual);
         //GETTERS
@@ -47,8 +44,8 @@ class Hospital{
         int cantidadDeCamasDisponibles();
         int cantidadPacientes();
         bool tieneEspecialidad(string especialidad);
-        bool tieneSobrecarga();
-
+        bool tieneSobrecarga(string fecha);
+        Paciente* quitarPaciente();
         void listarTurnosMedico(int idMedico);
         void listarTurnosPaciente(string dniPaciente);
 

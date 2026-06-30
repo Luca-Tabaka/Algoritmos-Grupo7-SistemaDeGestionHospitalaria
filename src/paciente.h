@@ -17,6 +17,7 @@ class Paciente{
         Paciente(string codigoHospital, int idPaciente, string dni, string fechaIngreso, string diagnostico, int prioridad, float peso);
         void cambiarPrioridad(int nuevaPrioridad);
         string getCodigoHospital();
+        void setCodigoHospital(string cod);
         int getIdPaciente();
         string getDni();
         string getFechaIngreso(); // aca podria ser date quizas

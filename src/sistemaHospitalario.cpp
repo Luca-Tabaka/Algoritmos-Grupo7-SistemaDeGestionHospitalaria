@@ -1,5 +1,6 @@
 #include"sistemaHospitalario.h"
 #include<iostream>
+#include<ctime>
 using namespace std;
         SistemaHospitalario::SistemaHospitalario(int cantidad) : listaHospitales(cantidad) {
         }
@@ -31,12 +32,11 @@ using namespace std;
            {
                cout<<"No se encontro el hospital"<<endl;
                return;
-           } 
-           //luego de derivar etc etc
+           }
+            reasignarPacientes(codigoHospital);
            listaHospitales.borrar(codigoHospital);
            grafoHospitales.eliminarVertice(codigoHospital);
            delete hospital;
-            //eliminar hospital de memoria
         }
 
 
@@ -72,31 +72,65 @@ using namespace std;
                 cout<<hospital->mostrarInformacion()<<endl;
             }
         }
-
-
-
-
-
-
-        Lista<Hospital*> SistemaHospitalario::hospitalesConSobrecarga(){
-            
-        }
-        void SistemaHospitalario::listarTurnosMedico(int idMedico){
-            //deberia ir en hospital?
-        }
-        void SistemaHospitalario::listarTurnosPaciente(int idPaciente){
-            //deberia ir en hospital?
+        void SistemaHospitalario::hospitalesConSobrecarga(string fecha){
+            cout<<"Hospitales con sobrecarga: "<<endl;
+            bool haySobrecarga = false;
+            for(int i = 1;i <= listaHospitales.size();i++){
+                Hospital* actual = listaHospitales.obtenerHospitalCelda(i);
+                if(actual != nullptr && actual->tieneSobrecarga(fecha)){
+                    cout<< actual->mostrarInformacion();
+                    haySobrecarga = true;
+                }
+            }
+            if(!haySobrecarga){
+            cout<<"No hay hospitales con sobrecarga"<<endl;
+            }
         }
         Lista<Hospital*> SistemaHospitalario::hospitalesPorEspecialidad(string especialidad){
             Lista<Hospital*> hospitales;
             for(int i = 1;i <= listaHospitales.size();i++){
                 Hospital* actual = listaHospitales.obtenerHospitalCelda(i);
-                if(actual != nullptr && actual->tieneSobrecarga()){
+                if(actual != nullptr && actual->tieneEspecialidad(especialidad)){
                     hospitales.alta(actual);
                 }
             }
 
             return hospitales;
+        }
+
+        void SistemaHospitalario::reasignarPacientes(string origen){
+            Lista<string> hospitales = hospitalesMasCercanos(origen);
+            Hospital* hospital = getHospital(origen);
+            if(hospitales.esVacia()){
+                cout<<"El hospital no tiene conexion con otros hospitales"<<endl;
+                return;
+            }
+            int pos = 1;
+            Hospital* actual = listaHospitales.buscar(hospitales.consulta(1));
+            while(hospital->cantidadPacientes()>0){
+                if(actual->cantidadDeCamasDisponibles() > 0){
+                    trasladarPaciente(origen,actual->getCodigoHospital());
+                }
+                else{
+                    pos++;
+                    if( pos > hospitales.obtenerLargo()){
+                        cout << "No hay mas hospitales disponibles" << endl;
+                        return;
+                    }
+                    actual = listaHospitales.buscar(hospitales.consulta(pos));
+                }
+                
+            }
+
+        }
+
+        void SistemaHospitalario::trasladarPaciente(string origen, string destino){
+            Hospital* o = getHospital(origen);
+            Hospital* d = getHospital(destino);
+            Paciente* paciente = o->quitarPaciente();
+            paciente->setCodigoHospital(destino);
+            d->agregarPaciente(paciente);
+            //cambiar paciente en archivo txt
         }
 
         //-------------------Grafos------------------------------------------------------------------------------
@@ -112,7 +146,7 @@ using namespace std;
             grafoHospitales.calcularCamino(origen, destino);
         }
 
-        Lista<string> SistemaHospitalario::hospitalesMasCercano(string origen){
+        Lista<string> SistemaHospitalario::hospitalesMasCercanos(string origen){
             return grafoHospitales.hospitalesMasCercanos(origen);
         }
         //-------------------Diagnosticos------------------------------------------------------------------------------
@@ -197,3 +231,4 @@ using namespace std;
                 hospitales.consulta(j + 1) = hospital;//Lo inserta en la posicion que corresponde
             }
         }
+
