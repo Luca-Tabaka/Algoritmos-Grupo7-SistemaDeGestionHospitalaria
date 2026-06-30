@@ -71,7 +71,7 @@ int main(){
     sistema.agregarHospital(hospital1);
     sistema.agregarHospital(new Hospital("H002", "Hospital B", "Ciudad B", 150, especialidad2, 75, 1500000.0));
     sistema.agregarHospital(new Hospital("H003", "Hospital C", "Ciudad C", 200, especialidad3, 100, 2000000.0));
-
+    sistema.agregarHospital(new Hospital("H004", "Hospital D", "Ciudad D", 250, especialidad, 125, 2500000.0));
     sistema.conectarHospitales("H001", "H002", 10);
     sistema.conectarHospitales("H001", "H003", 5);
     sistema.conectarHospitales("H002", "H003", 3);
@@ -87,10 +87,19 @@ int main(){
     hospital1->listarTurnosPaciente("87654321");
 
     sistema.verGrafoHospitales();
+    
+    //sistema.calcularCaminoHospitales("H001","H002");
+    Lista<string>h=sistema.hospitalesMasCercano("H001");
+    for (int i = 1; i <= h.obtenerLargo(); i++)
+    {
+        cout<<h.consulta(i)<<endl;
+    }
+    
 
-    sistema.dijkstra("H001", "H002");
 
-        // Insertar diagnósticos
+    //sistema.dijkstra("H001", "H002");
+//-----------------------------------------------------------------------------------(ARBOLES)
+/*         // Insertar diagnósticos
     sistema.insertarDiagnostico("Gripe", 15);
     sistema.insertarDiagnostico("Covid-19", 40);
     sistema.insertarDiagnostico("Neumonia", 25);
@@ -139,6 +148,9 @@ int main(){
     vacio.diagnosticoMasFrecuente();
     vacio.eliminarDiagnostico("Covid-19");
     vacio.arbolDesbalanceado();
+ */
+
+    //---------------------------------------------------------------------------------------------------------------------
     //hospital1->agregarTurno(new Turno(3, "H001", 103, 203, "20270508", "Pediatria", 60));
     
     //cout << hospital1->pacientesAtendidos("20250101", "20260512") << endl;

@@ -8,6 +8,7 @@ class NodoGrafo{
         string id;
         bool visitado;
         Lista<Arista> adyacentes;
+        int buscarAdyacente(string idDestino);
 
     public:
         NodoGrafo();
@@ -22,6 +23,8 @@ class NodoGrafo{
         bool getVisitado();
         // metodo para cambiar el estado del nodo
         void setVisitado(bool estado);
+        void eliminarAdyacente(string idDestino);
+        void vaciarAdyacentes();
 };
 
 

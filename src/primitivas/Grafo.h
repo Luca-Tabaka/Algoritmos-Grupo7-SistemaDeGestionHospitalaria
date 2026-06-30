@@ -6,6 +6,7 @@ class Grafo{
     private:
         Lista<NodoGrafo> vertices;
         void desmarcarVisitados();
+        NodoGrafo* buscarVertice(string id);
 
     public:
         // metodo constructor
@@ -17,10 +18,10 @@ class Grafo{
         // metodo para ver las adyacencias que tiene un vertice
         void verAdyacentes(string id);
         void eliminarVertice(string id);
-        NodoGrafo* buscarVertice(string id);
         void verGrafo();
-        void dijkstra(string origen, string destino);
-
+        void dijkstra(string origen, Lista<string>& caminos, Lista<int>& distancias);
+        void calcularCamino(string origen, string destino);
+        Lista<string> hospitalesMasCercanos(string origen);
 };
 
 

@@ -18,6 +18,7 @@ class SistemaHospitalario{
         Grafo grafoHospitales;
         bool compararHospitales(Hospital* h1, Hospital* h2, int opcion);
         void insertionSort(Lista<Hospital*>& hospitales, int opcion);
+        void reasignarPacientes(string origen);
 
     public:
         SistemaHospitalario(int cantidad);
@@ -40,7 +41,8 @@ class SistemaHospitalario{
         //grafos
         void verGrafoHospitales();
         void conectarHospitales(string origen, string destino, int tiempo);
-        void dijkstra(string origen, string destino);
+        void calcularCaminoHospitales(string origen, string destino);
+        Lista<string> hospitalesMasCercano(string origen);
 
         //diagnosticos
         void insertarDiagnostico(string diag, int frec);

@@ -30,12 +30,18 @@ void Grafo::eliminarVertice(string eliminar){
         cout<<"No se encontro el vertice a eliminar";
         return;
     }
-        for(int i=1; i<=vertices.obtenerLargo(); i++){
-            NodoGrafo* vertice = &vertices.consulta(i);
-            if(vertice->getId() == eliminar){
-                vertices.baja(i);
-            }
+    Lista<Arista> adyacentes = vertice->getAdyacentes();
+    for(int i=1;i<=adyacentes.obtenerLargo();i++){
+        NodoGrafo* vecino = buscarVertice(adyacentes.consulta(i).getDestino());
+        vecino->eliminarAdyacente(eliminar);
     }
+    for(int i=1; i<=vertices.obtenerLargo(); i++){
+        NodoGrafo* vertice = &vertices.consulta(i);
+        if(vertice->getId() == eliminar){
+            vertices.baja(i);
+        }
+    }
+    vertice->vaciarAdyacentes();
 }
 
 void Grafo::verAdyacentes(string id){
@@ -84,40 +90,26 @@ NodoGrafo* Grafo::buscarVertice(string id){
 }
 
 
-void Grafo::dijkstra(string origen,string destino){
+void Grafo::dijkstra(string origen, Lista<string>& caminos, Lista<int>& distancias){
     desmarcarVisitados();
     int largo = vertices.obtenerLargo();
-    int distancias[largo + 1];
-    string caminos[largo + 1];
+    int d[largo + 1];
+    string c[largo + 1];
 
     const int inf=99999;
 
     for(int i=1; i<=largo; i++){
-        distancias[i] = inf;
-        caminos[i] = "";
+        d[i] = inf;
+        c[i] = "";
     }
-
-
- 
     NodoGrafo* verticeOrigen = buscarVertice(origen);
     if(verticeOrigen == nullptr){
         cout<< "No existe el vertice origen"<<endl;
         return;
     }
-        int posDestino = -1;
-    // busco la posicion del destino en la lista de vertices
-    for(int i=1; i<=largo; i++){
-        if(vertices.consulta(i).getId() == destino){
-            posDestino = i;
-            break;
-        }
-    }
-    if(posDestino == -1){
-        cout<< "No existe el vertice destino"<<endl;
-        return;
-    }
+
     Lista<Arista>& adyacentes = verticeOrigen->getAdyacentes();
-    // inicializo las distancias y caminos de los adyacentes al origen
+    // inicializo las d y c de los adyacentes al origen
     for(int i=1; i<=adyacentes.obtenerLargo(); i++){
         Arista& arista = adyacentes.consulta(i);
         string verticeDestino = arista.getDestino();
@@ -126,8 +118,8 @@ void Grafo::dijkstra(string origen,string destino){
         for(int a=1; a<=largo; a++){
             NodoGrafo& vertice = vertices.consulta(a);
             if(vertice.getId() == verticeDestino){
-                distancias[a] = peso;
-                caminos[a] = origen;
+                d[a] = peso;
+                c[a] = origen;
             }
         }
     }
@@ -139,8 +131,8 @@ void Grafo::dijkstra(string origen,string destino){
         // busco el no visitado con menor distancia
         for(int i=1; i<=largo; i++){
             NodoGrafo& vertice = vertices.consulta(i);
-            if(!vertice.getVisitado() && distancias[i] < minDistancia){
-                minDistancia = distancias[i];
+            if(!vertice.getVisitado() && d[i] < minDistancia){
+                minDistancia = d[i];
                 verticeMinimo = i;
             }
         }
@@ -151,7 +143,7 @@ void Grafo::dijkstra(string origen,string destino){
         vertices.consulta(verticeMinimo).setVisitado(true);
         // obtengo los adyacentes del vertice minimo
         Lista<Arista>& adj = vertices.consulta(verticeMinimo).getAdyacentes();
-        // hago recorrido por los adyacentes y actualizo distancias y caminos
+        // hago recorrido por los adyacentes y actualizo d y c
         for(int i=1; i<=adj.obtenerLargo(); i++){
             Arista& arista = adj.consulta(i);
             string verticeDestino = arista.getDestino();
@@ -160,29 +152,80 @@ void Grafo::dijkstra(string origen,string destino){
             for(int a=1; a<=largo; a++){
                 NodoGrafo& vertice = vertices.consulta(a);
                 if(vertice.getId() == verticeDestino){
-                    if(distancias[verticeMinimo] + peso < distancias[a]){
-                        distancias[a] = distancias[verticeMinimo] + peso;
-                        caminos[a] = vertices.consulta(verticeMinimo).getId();
+                    if(d[verticeMinimo] + peso < d[a]){
+                        d[a] = d[verticeMinimo] + peso;
+                        c[a] = vertices.consulta(verticeMinimo).getId();
                     }
                 }
             }
         }
     }
-
+    // copiar en listas
+    for (int i = 1; i <= largo; i++){
+        caminos.alta(c[i]);
+        distancias.alta(d[i]);
+    }
     
-    cout << "tiempo minimo: " << distancias[posDestino] << endl;
 
-    // construyo el camino desde origen a destino
+}
+
+void Grafo::calcularCamino(string origen, string destino){
+    Lista<string> caminos;
+    Lista<int> distancias;
+    dijkstra(origen, caminos, distancias);
+    int largo =vertices.obtenerLargo();
+    int posDestino = -1;
+
+    for(int i=1; i<=largo; i++){
+        if(vertices.consulta(i).getId() == destino){
+            posDestino = i;
+            break;
+        }
+    }
+    if(posDestino == -1){
+        cout<< "No existe el vertice destino"<<endl;
+        return;
+    }    
     string camino = destino;
     string actual = destino;
-    while(actual != origen){
+    while(actual != origen ){
         for(int i=1; i<=largo; i++){
             if(vertices.consulta(i).getId() == actual){
-                actual = caminos[i];
+                actual = caminos.consulta(i);
                 camino = actual + " -> " + camino;
                 break;
             }
         }
     }
     cout << "camino: " << camino << endl;
+}
+
+
+Lista<string>Grafo::hospitalesMasCercanos(string origen){
+    Lista<string> caminos;
+    Lista<int> distancias;
+    dijkstra(origen, caminos, distancias);
+    desmarcarVisitados();  
+    int largo = vertices.obtenerLargo();
+    Lista<string> hospitales;
+    while (true){
+        int minDistancia = 99999;
+        int verticeMinimo = -1;
+        // busco el no visitado con menor distancia
+        for(int i=1; i<=largo; i++){
+            NodoGrafo& vertice = vertices.consulta(i);
+            if(!vertice.getVisitado() && distancias.consulta(i) < minDistancia && vertice.getId() != origen && distancias.consulta(i) != 99999){
+                minDistancia = distancias.consulta(i);
+                verticeMinimo = i;
+            }
+        }
+        if(verticeMinimo == -1){
+            break;
+        }
+        // marco el vertice que encontre como visitado
+        NodoGrafo& vertice = vertices.consulta(verticeMinimo);
+        hospitales.alta(vertice.getId());
+        vertice.setVisitado(true);
+    }    
+    return hospitales;
 }

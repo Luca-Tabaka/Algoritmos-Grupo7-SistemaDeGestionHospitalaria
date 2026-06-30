@@ -20,6 +20,27 @@ Lista<Arista>& NodoGrafo::getAdyacentes(){
 }
 
 void NodoGrafo::agregarAdyacente(Arista arista){
-    // aca uso el metodo de alta ya creado en lista
     adyacentes.alta(arista);
+}
+
+int NodoGrafo::buscarAdyacente(string id){
+    for(int i = 1; i <= adyacentes.obtenerLargo(); i++){
+        if(adyacentes.consulta(i).getDestino() == id){
+            return i;
+        }
+    }
+    return -1; 
+}
+
+void NodoGrafo::eliminarAdyacente(string idDestino){
+    int pos = buscarAdyacente(idDestino);
+    if(pos == -1){
+        cout << "No se encontro el adyacente: " <<endl;
+        return;
+    }
+    adyacentes.baja(pos);
+} 
+
+void NodoGrafo::vaciarAdyacentes(){
+    adyacentes.vaciar();
 }

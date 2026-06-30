@@ -108,13 +108,13 @@ using namespace std;
             grafoHospitales.agregarArista(origen, destino, tiempo);
         }
         
-        void SistemaHospitalario::dijkstra(string origen, string destino){
-            grafoHospitales.dijkstra(origen, destino);
+        void SistemaHospitalario::calcularCaminoHospitales(string origen, string destino){
+            grafoHospitales.calcularCamino(origen, destino);
         }
 
-        //lista SistemaHospitalario::calcularRutaDerivacion(Hospital origen, Hospital destino);
-
-
+        Lista<string> SistemaHospitalario::hospitalesMasCercano(string origen){
+            return grafoHospitales.hospitalesMasCercanos(origen);
+        }
         //-------------------Diagnosticos------------------------------------------------------------------------------
         void SistemaHospitalario::insertarDiagnostico(string diag, int frec){
             if(!diagnosticos.existeDiagnostico(diag)){
