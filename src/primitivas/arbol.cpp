@@ -11,16 +11,16 @@ void Arbol::cambiarRaiz(NodoArbol* nuevaRaiz){
 }
 
 NodoArbol* Arbol::insertar(NodoArbol* nodo, string diag, int frec){
-    if(nodo == nullptr){
+    if(nodo == nullptr){//Si llega a su posicion, inserta
         return new NodoArbol(diag,frec);
     }
-    else if(frec < nodo->getFrecuencia()){
+    else if(frec < nodo->getFrecuencia()){//si la frecuencia es mas chica, inserta a la izquierda
         nodo-> cambiarIzq(insertar(nodo->getIzq(),diag,frec));
     }
-    else if(frec > nodo->getFrecuencia()){
+    else if(frec > nodo->getFrecuencia()){//si es mas grande, inserta a la derecha
          nodo-> cambiarDer(insertar(nodo->getDer(),diag,frec));
     }
-    else if(diag < nodo->getDiagnostico()){
+    else if(diag < nodo->getDiagnostico()){// si las frecuencias son iguales, desempata el diagnostico por orden alfabético
         nodo-> cambiarIzq(insertar(nodo->getIzq(),diag,frec));
     }
     else{
@@ -32,31 +32,36 @@ NodoArbol* Arbol::insertar(NodoArbol* nodo, string diag, int frec){
 void Arbol::aumentarFrecuencia(string diag){
     NodoArbol* nodoBuscado = buscarDiagnostico(raiz,diag);
     if(nodoBuscado == nullptr){
-        cout<<"No se pudo encontrar el nodo";
+        cout<<"El diagnostico que ingresó no existe, no se puede incrementar frecuencia";
         return;
     }
     else{
-        int frec = nodoBuscado->getFrecuencia();
-        raiz = eliminar(raiz,frec,diag);
-        raiz = insertar(raiz,diag,frec+1);
+        int frec = nodoBuscado->getFrecuencia();//si lo encuentra, guarda la frecuencia
+        raiz = eliminar(raiz,frec,diag);//elimina el nodo
+        raiz = insertar(raiz,diag,frec+1);//Lo vuelve a insertar con frecuencia + 1
     }
 }
 
 NodoArbol* Arbol::buscarDiagnostico(NodoArbol* nodo, string diag){
     if(nodo == nullptr){
-        return nullptr;
+        return nullptr;// si llega a una hoja, vuelve
     }
-    if(nodo->getDiagnostico() == diag){
+    if(nodo->getDiagnostico() == diag){// si lo encuentra, devuelve el nodo y corta la recurcion
         return nodo;
     }
-    NodoArbol* encontrado = buscarDiagnostico(nodo->getIzq(), diag);
+    NodoArbol* encontrado = buscarDiagnostico(nodo->getIzq(), diag);//primero busca a izquierda
 
-    if(encontrado != nullptr){
+    if(encontrado != nullptr){//si lo encuentra, lo devuelve
         return encontrado;
     }
-    return buscarDiagnostico(nodo->getDer(), diag);
+    return buscarDiagnostico(nodo->getDer(), diag);//si no, busca a derecha
 }
 
+
+bool Arbol::existeDiagnostico(string diag){
+    NodoArbol* encontrado = buscarDiagnostico(raiz, diag);
+    return encontrado != nullptr;
+}
 NodoArbol* Arbol::diagnosticoMasFrecuente(){
     NodoArbol* nodoActual = raiz;
     if(nodoActual == nullptr) return nullptr;
@@ -140,7 +145,7 @@ void Arbol::eliminarDiagnostico(string diag){
         raiz = eliminar(raiz,nodo->getFrecuencia(),diag);
     }
     else{
-        cout<<"Nodo no encontrado" << endl;
+        cout<<"No se encontro el diagnostico a eliminar" << endl;
     }
 }
 

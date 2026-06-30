@@ -3,6 +3,8 @@
 using namespace std;
         SistemaHospitalario::SistemaHospitalario(int cantidad) : listaHospitales(cantidad) {
         }
+
+        //-------------------Hospitales-----------------------------------
         void SistemaHospitalario::consultarInformacionHospital(string codHospital){
             Hospital* hospital = listaHospitales.buscar(codHospital);
             if (hospital == nullptr)
@@ -11,6 +13,11 @@ using namespace std;
                 return;
             }
             cout<<hospital->mostrarInformacion()<<endl;
+        }
+
+        Hospital* SistemaHospitalario::getHospital(string codHospital){
+            Hospital* hospital = listaHospitales.buscar(codHospital);
+            return hospital;
         }
         void SistemaHospitalario::agregarHospital(Hospital* hospital){
             listaHospitales.insertar(hospital);
@@ -34,19 +41,21 @@ using namespace std;
 
 
 
-        void SistemaHospitalario::listarHospitales(int opcion){
+        void SistemaHospitalario::listarHospitales(int opcion){//opciones: 1 = camas totales, 2 = personal medico, 3 = presupuesto, 4 = disponibilidad de camas
             Lista<Hospital*> hospitales;
             for(int i=0; i<listaHospitales.size(); i++){
                 Hospital* hospital = listaHospitales.obtenerHospitalCelda(i);
                 if (hospital != nullptr){
                     hospitales.alta(hospital);
                 }
-            }
-            insertionSort(hospitales, opcion);
+            }//se cargan los hospitales de la listaHospitales
+
+            insertionSort(hospitales, opcion);//se ordenan con insertion sort dada la opcion
+
             for(int i=1; i<=hospitales.obtenerLargo(); i++){
                 Hospital* hospital = hospitales.consulta(i);
                 cout<<hospital->mostrarInformacion()<<endl;
-            }
+            }// se imprimen los hospitales
         }
 
         void SistemaHospitalario::listarHospitalesPorEspecialidad(string especialidad){
@@ -68,9 +77,9 @@ using namespace std;
 
 
 
-        //lista SistemaHospitalario::calcularRutaDerivacion(Hospital origen, Hospital destino);
+
         Lista<Hospital*> SistemaHospitalario::hospitalesConSobrecarga(){
-        //Dijkstra
+            
         }
         void SistemaHospitalario::listarTurnosMedico(int idMedico){
             //deberia ir en hospital?
@@ -80,8 +89,17 @@ using namespace std;
         }
         Lista<Hospital*> SistemaHospitalario::hospitalesPorEspecialidad(string especialidad){
             Lista<Hospital*> hospitales;
+            for(int i = 1;i <= listaHospitales.size();i++){
+                Hospital* actual = listaHospitales.obtenerHospitalCelda(i);
+                if(actual != nullptr && actual->tieneSobrecarga()){
+                    hospitales.alta(actual);
+                }
+            }
+
+            return hospitales;
         }
 
+        //-------------------Grafos------------------------------------------------------------------------------
         void SistemaHospitalario::verGrafoHospitales(){
             grafoHospitales.verGrafo();
         }
@@ -94,6 +112,61 @@ using namespace std;
             grafoHospitales.dijkstra(origen, destino);
         }
 
+        //lista SistemaHospitalario::calcularRutaDerivacion(Hospital origen, Hospital destino);
+
+
+        //-------------------Diagnosticos------------------------------------------------------------------------------
+        void SistemaHospitalario::insertarDiagnostico(string diag, int frec){
+            if(!diagnosticos.existeDiagnostico(diag)){
+                diagnosticos.insertar(diag,frec);
+            }
+            else{
+                cout<<"El diagnostico que ingresó ya tiene una frecuencia asignada"<<endl;
+            }
+        }
+        void SistemaHospitalario::insertarDiagnostico(string diag){
+            if(!diagnosticos.existeDiagnostico(diag)){
+                diagnosticos.insertar(diag,1);
+            }
+            else{
+                cout<<"El diagnostico que ingresó ya tiene una frecuencia asignada"<<endl;
+            }
+        }
+
+        void SistemaHospitalario::incrementarFrecuencia(string diag){
+            if(!diagnosticos.existeDiagnostico(diag)){
+                cout<<"El diagnostico que ingresó no existe, no se puede incrementar frecuencia"<<endl;
+            }
+            else{
+                diagnosticos.aumentarFrecuencia(diag);
+            }
+        }
+        void SistemaHospitalario::diagnosticoMasFrecuente(){
+            NodoArbol* diag = diagnosticos.diagnosticoMasFrecuente();
+            if(diag == nullptr){
+                cout<<"El arbol está vacio, no hay diagnostico mas frecuente";
+                return;
+            }
+            cout<<"Diagnostico mas frecuente: " << diag->getDiagnostico() << " que afecta a: " << diag->getFrecuencia() << " Pacientes"<<endl;
+        }
+        void SistemaHospitalario::listarDiagnosticos(){
+            diagnosticos.mostrarDiagnosticos();
+        }
+        void SistemaHospitalario::eliminarDiagnostico(string diag){
+            diagnosticos.eliminarDiagnostico(diag);
+        }
+        void SistemaHospitalario::arbolDesbalanceado(){
+            if(diagnosticos.estaDesbalanceado()){
+                cout<<"Arbol desbalanceado"<<endl;
+            }
+            else{
+                cout<<"Arbol balanceado"<<endl;
+            }
+        }
+
+
+
+        //-------------------Auxiliares-----------------------------------
         bool SistemaHospitalario::compararHospitales(Hospital* h1, Hospital* h2, int opcion){
             switch (opcion)
             {
@@ -103,20 +176,24 @@ using namespace std;
                 return h1->getPersonalMedico() < h2->getPersonalMedico();
             case 3: //presupuesto anual
                 return h1->getPresupuestoAnual() < h2->getPresupuestoAnual();
-            case 4: // por disponibilidad de camas
+            case 4: // disponibilidad de camas
                 return h1->cantidadDeCamasDisponibles() < h2->cantidadDeCamasDisponibles();
             }
         }
 
         void SistemaHospitalario::insertionSort(Lista<Hospital*>& hospitales, int opcion){// va con referencia para trabajar sobre la lista original
             int largo = hospitales.obtenerLargo();
-            for(int i=2; i<=largo; i++){
-                Hospital* hospital = hospitales.consulta(i);
-                int j = i - 1;
-                while(j >= 1 && compararHospitales(hospitales.consulta(j), hospital, opcion)){
-                    hospitales.consulta(j + 1) = hospitales.consulta(j);
+            for(int i=2; i<=largo; i++){//arranca del segundo porque el primero ya esta ordenado, cada iteracion ordena un hospital
+                Hospital* hospital = hospitales.consulta(i);//elige el primer hospital no ordenado
+                int j = i - 1;//Compara desde la posicion anterior
+                while(j >= 1){//Mientras no encuentra su posicion
+                    Hospital* actual = hospitales.consulta(j);//guarda el hospital que se compara en esta iteracion para evitar consultar 2 veces
+                    if(!compararHospitales(actual, hospital, opcion)){//si se encuentra la posicion correcta, corta
+                        break;
+                    } 
+                    hospitales.consulta(j + 1) = actual; //si no, desplaza hospital a la derecha. Como devuelve hospital por referencia, se puede asignar.
                     j--;
                 }
-                hospitales.consulta(j + 1) = hospital;
+                hospitales.consulta(j + 1) = hospital;//Lo inserta en la posicion que corresponde
             }
         }

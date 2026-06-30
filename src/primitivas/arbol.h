@@ -17,7 +17,7 @@ class Arbol{
         void cambiarRaiz(NodoArbol* raiz);
 
         void insertar(string diag, int frec);
-
+        bool existeDiagnostico(string diag);
         void aumentarFrecuencia(string diag);
         NodoArbol* diagnosticoMasFrecuente();
         bool estaDesbalanceado();

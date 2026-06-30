@@ -89,6 +89,56 @@ int main(){
     sistema.verGrafoHospitales();
 
     sistema.dijkstra("H001", "H002");
+
+        // Insertar diagnósticos
+    sistema.insertarDiagnostico("Gripe", 15);
+    sistema.insertarDiagnostico("Covid-19", 40);
+    sistema.insertarDiagnostico("Neumonia", 25);
+    sistema.insertarDiagnostico("Diabetes", 18);
+    sistema.insertarDiagnostico("Hipertension", 30);
+
+    // Mostrar el árbol (inorden)
+    cout << "\n=== Diagnósticos ===\n";
+    sistema.listarDiagnosticos();
+
+    // Obtener el diagnóstico más frecuente
+    cout << "\n=== Diagnóstico más frecuente ===\n";
+    sistema.diagnosticoMasFrecuente();
+
+    // Incrementar la frecuencia de un diagnóstico
+    cout << "\n=== Incrementar frecuencia de Gripe ===\n";
+    sistema.incrementarFrecuencia("Gripe");
+    sistema.incrementarFrecuencia("Gripe");
+    sistema.incrementarFrecuencia("Gripe");
+
+    // Ver nuevamente el más frecuente
+    sistema.diagnosticoMasFrecuente();
+
+    // Eliminar un diagnóstico
+    cout << "\n=== Eliminar Diabetes ===\n";
+    sistema.eliminarDiagnostico("Diabetes");
+
+    // Mostrar el árbol luego de eliminar
+    cout << "\n=== Diagnósticos luego de eliminar ===\n";
+    sistema.listarDiagnosticos();
+
+    // Verificar balance
+    cout << "\n=== Estado del árbol ===\n";
+    sistema.arbolDesbalanceado();
+    // Diagnóstico repetido
+    sistema.insertarDiagnostico("Covid-19", 50);
+
+    // Diagnóstico inexistente
+    sistema.incrementarFrecuencia("Dengue");
+
+    // Eliminar diagnóstico inexistente
+    sistema.eliminarDiagnostico("Cancer");
+
+    // Árbol vacío
+    SistemaHospitalario vacio(10);
+    vacio.diagnosticoMasFrecuente();
+    vacio.eliminarDiagnostico("Covid-19");
+    vacio.arbolDesbalanceado();
     //hospital1->agregarTurno(new Turno(3, "H001", 103, 203, "20270508", "Pediatria", 60));
     
     //cout << hospital1->pacientesAtendidos("20250101", "20260512") << endl;
