@@ -48,18 +48,58 @@ int main(){
     sistema.agregarHospital(new Hospital("H002", "Hospital B", "Ciudad B", 150, Lista<std::string>(), 75, 1500000.0));
     sistema.conectarHospitales("H001", "H002", 10);
     sistema.verGrafoHospitales(); */
+    
+    Paciente* paciente1 = new Paciente("H001", 101, "12345678", "20250304", "Consultas", 1, 70.5);
+    Paciente* paciente2 = new Paciente("H001", 102, "87654321", "20250305", "Examen", 2, 65.0);
 
-    sistema.agregarHospital(new Hospital("H001", "Hospital A", "Ciudad A", 100, Lista<std::string>(), 50, 1000000.0));
-    sistema.agregarHospital(new Hospital("H002", "Hospital B", "Ciudad B", 150, Lista<std::string>(), 75, 1500000.0));
-    sistema.agregarHospital(new Hospital("H003", "Hospital C", "Ciudad C", 200, Lista<std::string>(), 100, 2000000.0));
+
+    // creacion de listas para hospital
+    Lista<string> especialidad;
+    especialidad.alta("Cardiologia");
+    especialidad.alta("Neurologia");
+    Lista<string> especialidad2;
+    especialidad2.alta("Pediatria");
+    Lista<string> especialidad3;
+    especialidad3.alta("Cardiologia");
+    especialidad3.alta("Pediatria");
+
+    Hospital *hospital1 = new Hospital("H001", "Hospital A", "Ciudad A", 100, especialidad, 50, 1000000.0);
+
+    hospital1->agregarPaciente(paciente1);
+    hospital1->agregarPaciente(paciente2);
+
+    sistema.agregarHospital(hospital1);
+    sistema.agregarHospital(new Hospital("H002", "Hospital B", "Ciudad B", 150, especialidad2, 75, 1500000.0));
+    sistema.agregarHospital(new Hospital("H003", "Hospital C", "Ciudad C", 200, especialidad3, 100, 2000000.0));
 
     sistema.conectarHospitales("H001", "H002", 10);
     sistema.conectarHospitales("H001", "H003", 5);
     sistema.conectarHospitales("H002", "H003", 3);
 
-    sistema.verGrafoHospitales();
-    sistema.dijkstra("H001", "H002");
 
+    hospital1->agregarTurno(new Turno(1, "H001", 101, 201, "20250506", "Cardiologia", 30));
+    hospital1->agregarTurno(new Turno(2, "H001", 101, 201, "20250708", "Pediatria", 60));
+    hospital1->agregarTurno(new Turno(3, "H001", 101, 201, "20251008", "Control", 60));
+
+
+    hospital1->agregarTurno(new Turno(2, "H001", 102, 202, "20250507", "Neurologia", 45));
+
+    hospital1->listarTurnosPaciente("87654321");
+
+    sistema.verGrafoHospitales();
+
+    sistema.dijkstra("H001", "H002");
+    //hospital1->agregarTurno(new Turno(3, "H001", 103, 203, "20270508", "Pediatria", 60));
+    
+    //cout << hospital1->pacientesAtendidos("20250101", "20260512") << endl;
+    //sistema.consultarInformacionHospital("H001");
+
+/*     sistema.verGrafoHospitales();
+    sistema.eliminarHospital("H001");
+    sistema.verGrafoHospitales(); */
+
+    //sistema.listarHospitales(1); // Ordenar por capacidad de camas
+    //sistema.listarHospitalesPorEspecialidad("Pediatria");
 }
 
 /* int main() {

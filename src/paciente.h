@@ -14,8 +14,9 @@ class Paciente{
         float peso; 
     
     public:
+        Paciente(string codigoHospital, int idPaciente, string dni, string fechaIngreso, string diagnostico, int prioridad, float peso);
         void cambiarPrioridad(int nuevaPrioridad);
-        string getodigoHospital();
+        string getCodigoHospital();
         int getIdPaciente();
         string getDni();
         string getFechaIngreso(); // aca podria ser date quizas

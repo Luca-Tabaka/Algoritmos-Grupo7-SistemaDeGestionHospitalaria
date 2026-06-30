@@ -1,4 +1,5 @@
 #include"tablaHash.h"
+using namespace std;
 
 TablaHash::TablaHash(int cap){
     int size = primerPrimoSuperior(cap/0.8);
@@ -6,31 +7,11 @@ TablaHash::TablaHash(int cap){
     tabla = new CeldaHash[size];
 }
 
+int TablaHash::hash(string clave){
+    int c2 = (int) clave[1];
+    int c3 = (int) clave[2];
 
-int TablaHash::primerPrimoSuperior(int num){
-    while(!esPrimo(num)){
-        num++;
-    }
-    return num;
-}
-
-bool TablaHash::esPrimo(int num){
-    if(num == 1) return false;
-    if(num == 2) return true;
-    if(num%2 == 0)return false;
-    for(int i = 3;i*i <= num; i+=2){
-        if (num % i == 0){
-            return false;
-        }
-    }
-    return true;
-}
-
-int TablaHash::hash(std::string clave){
-    int c1 = (int) clave[1];
-    int c2 = (int) clave[2];
-
-    return((c1 * 128 + c2) % capacidad);
+    return((c2 * 128 + c3) % capacidad);
 }
 
 void TablaHash::vaciar(){
@@ -49,19 +30,19 @@ TablaHash::~TablaHash()
 }
 
 void TablaHash::insertar(Hospital* hos){
-    std::string clave = hos-> getCodigoHospital();
+    string clave = hos-> getCodigoHospital();
     int pos = hash(clave);
     int inicio = pos;
     while(tabla[pos].getHospital() != nullptr){
         pos = (pos + 1) % capacidad;
         if(pos == inicio){
-            std::cout<<"Tabla llena, no se pudo insertar un nuevo hospital";
+            cout<<"Tabla llena, no se pudo insertar un nuevo hospital";
             return;
         }
     }
     tabla[pos].addHospital(hos);
 }
-Hospital* TablaHash::buscar(std::string clave){
+Hospital* TablaHash::buscar(string clave){
     int pos = hash(clave);
     int inicio = pos;
 
@@ -77,7 +58,7 @@ Hospital* TablaHash::buscar(std::string clave){
     return nullptr;
 }
 
-void TablaHash::borrar(std::string clave){
+void TablaHash::borrar(string clave){
     int pos = hash(clave);
     int inicio = pos;
     while(tabla[pos].getEstado()){//mientras encuentre posiciones que estan/fueron ocupadas sigue
@@ -93,8 +74,31 @@ void TablaHash::borrar(std::string clave){
     return;//si encuentra una posicion vacia y no lo encontro, termina.
 }
 Hospital* TablaHash::obtenerHospitalCelda(int pos){
+    if(pos < 0 || pos >= capacidad){
+        return nullptr;
+    }
     return tabla[pos].getHospital();
 }
+
 int TablaHash::size(){
     return capacidad;
+}
+
+int TablaHash::primerPrimoSuperior(int num){
+    while(!esPrimo(num)){
+        num++;
+    }
+    return num;
+}
+
+bool TablaHash::esPrimo(int num){
+    if(num == 1) return false;
+    if(num == 2) return true;
+    if(num%2 == 0)return false;
+    for(int i = 3;i*i <= num; i+=2){
+        if (num % i == 0){
+            return false;
+        }
+    }
+    return true;
 }

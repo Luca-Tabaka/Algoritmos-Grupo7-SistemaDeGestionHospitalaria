@@ -1,25 +1,27 @@
 #ifndef TURNO_H_
 #define TURNO_H_
 #include<string>
-#include<vector>
+using namespace std;
 
 class Turno{
     private:
         int idTurno;
-        std:: string codigoHospital;
+        string codigoHospital;
         int idPaciente;
         int idMedico;
-        std:: string fecha; // o date
-        std:: string especialidad;
+        string fecha; // o date
+        string especialidad;
         int duracion;
     public:
+        Turno(int id, string codhospital, int idP, int idM, string fec, string especialidad, int t);
         int getTurnoId();
-        std:: string getCodigoHospital();
+        string getCodigoHospital();
         int getIdPaciente();
         int getIdMedico();
-        std:: string getFecha(); // o date
-        std:: string getEspecialidad();
+        string getFecha(); // o date
+        string getEspecialidad();
         int getDuracion();
+        void imprimir();
 
 };
 

@@ -16,6 +16,7 @@ class Grafo{
         void agregarArista(string origen, string destino, int peso);
         // metodo para ver las adyacencias que tiene un vertice
         void verAdyacentes(string id);
+        void eliminarVertice(string id);
         NodoGrafo* buscarVertice(string id);
         void verGrafo();
         void dijkstra(string origen, string destino);

@@ -14,7 +14,6 @@ void PriorityQueue::push(Paciente* p){
                 listaEspera.alta(p,i);
                 return;
             }
-
             i++;
         }
         listaEspera.alta(p,i);
@@ -22,10 +21,22 @@ void PriorityQueue::push(Paciente* p){
 }
 
 void PriorityQueue::pop(){
+    if (vacio())
+    {
+        cout<<"La lista esta vacia!"<<endl;
+        return;
+    }
+    
     listaEspera.baja(1);
 }
 
 Paciente* PriorityQueue::primero(){
+    if (vacio())
+    {
+        cout<<"La lista esta vacia!"<<endl;
+        return nullptr;
+    }
+        
     return listaEspera.consulta(1);
 }   
 
@@ -38,11 +49,11 @@ void PriorityQueue::cambiarPrioridad(string dni, int nuevaPrioridad){
     while(i <= listaEspera.obtenerLargo()){
         Paciente* actual = listaEspera.consulta(i);
         if(actual->getDni() == dni){
-        listaEspera.baja(i);
-        actual->cambiarPrioridad(nuevaPrioridad);
-        push(actual);
-        cout<<"Prioridad cambiada con exito"<< endl;
-        return;
+            listaEspera.baja(i);
+            actual->cambiarPrioridad(nuevaPrioridad);
+            push(actual);
+            cout<<"Prioridad cambiada con exito"<< endl;
+            return;
         }
         i++;
     }

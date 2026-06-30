@@ -1,6 +1,15 @@
 #include"paciente.h"
-
-        std:: string Paciente::getodigoHospital(){
+        Paciente::Paciente(string codigoHospital, int idPaciente, string dni, string fechaIngreso, string diagnostico, int prioridad, float peso){
+            this->codigoHospital = codigoHospital;
+            this->idPaciente = idPaciente;
+            this->dni = dni;
+            this->fechaIngreso = fechaIngreso;
+            this->diagnostico = diagnostico;
+            this->prioridad = prioridad;
+            this->peso = peso;
+        }
+        
+        std:: string Paciente::getCodigoHospital(){
             return codigoHospital;
         }
         int Paciente::getIdPaciente(){

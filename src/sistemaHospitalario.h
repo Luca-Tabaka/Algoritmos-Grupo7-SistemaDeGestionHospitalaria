@@ -6,7 +6,7 @@
 #include"primitivas/lista.h"
 #include"primitivas/Grafo.h"
 #include"hospital.h"
-#include "arbol.h"
+#include "primitivas/arbol.h"
 using namespace std;
 
 class SistemaHospitalario{
@@ -16,13 +16,17 @@ class SistemaHospitalario{
         Lista<Derivacion*> listaDerivaciones;
         Arbol diagnosticos;
         Grafo grafoHospitales;
+        bool compararHospitales(Hospital* h1, Hospital* h2, int opcion);
+        void insertionSort(Lista<Hospital*>& hospitales, int opcion);
+
         //ABB diagnosticos;
     public:
         SistemaHospitalario(int cantidad);
         void consultarInformacionHospital(string codHospital);
         void agregarHospital(Hospital* hospital);
         void eliminarHospital(string codigoHospital);
-        void listarHospitales();
+        void listarHospitales(int opcion);
+        void listarHospitalesPorEspecialidad(string especialidad);
         //lista calcularRutaDerivacion(string HospitalOrigen, string Hospitaldestino);
         Lista<Hospital*> hospitalesConSobrecarga();
         void listarTurnosMedico(int idMedico);

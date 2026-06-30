@@ -6,44 +6,53 @@
 #include "primitivas/lista.h"
 #include "primitivas/nodo.h"
 #include"turno.h"
+#include "priorityqueue.h"
+using namespace std; 
 
 class Hospital{
     private:
-        std::string codigoHospital;
-        std::string nombre;
-        std::string ciudad;
+        string codigoHospital;
+        string nombre;
+        string ciudad;
         int capacidadCamas;
-        Lista<std::string> especialidades;
+        Lista<string> especialidades;
         int personalMedico;
         double presupuestoAnual;
         Lista<Insumo*> insumos;
         Lista<Turno*> turnos;
         Lista<Paciente*> pacientes;
-        Paciente* obtenerPaciente(std::string dni);
+        PriorityQueue listaEspera;
+        Paciente* obtenerPaciente(string dni);
+        
+
 
 
 
     public:
-        Hospital(std:: string codigoHospital,std:: string nombre, std:: string ciudad, int capacidadCamas, Lista<std::string> especialidades,int personalMedico,double presupuestoAnual);
-        std:: string mostrarInformacion();
-
-        int pacientesAtendidos(std::string fechaInicio, std::string fechaFin);
+        Hospital( string codigoHospital, string nombre,  string ciudad, int capacidadCamas, Lista<string> especialidades,int personalMedico,double presupuestoAnual);
+        string mostrarInformacion();
+        int pacientesAtendidos(string fechaInicio, string fechaFin);
         int cantidadDeCamasDisponibles();
         int cantidadPacientes();
-        bool tieneEspecialidad(std::string especialidad);
+        bool tieneEspecialidad(string especialidad);
         bool tieneSobrecarga();
-
         Lista<Insumo*> calcularCargaAmbulancia(Lista<Insumo*> insumos, int capacidadMax);
-
-        std::string getNombre();
-        std:: string getCodigoHospital();
-        std:: string getCiudad();
+        string getNombre();
+        string getCodigoHospital();
+        string getCiudad();
         int getCapacidadCamas();
-        Lista<std::string> getEspecialidades();
-        Lista<Turno*> listarTurnosMedico(int idMedico);
-        Lista<Turno*> listarTurnosPaciente(std::string dniPaciente);
+        Lista<string> getEspecialidades();
+        void listarTurnosMedico(int idMedico);
+        void listarTurnosPaciente(string dniPaciente);
         int getPersonalMedico();
         double getPresupuestoAnual();
+        void agregarTurno(Turno* turno);
+        void agregarPaciente(Paciente* paciente);
+
+        // lista de espera
+        void agregarPacienteListaEspera(string dni);
+        void cambiarPrioridadPaciente(string dni, int nuevaPrioridad);
+        Paciente* extraerPacienteListaEspera();
 };
 
 

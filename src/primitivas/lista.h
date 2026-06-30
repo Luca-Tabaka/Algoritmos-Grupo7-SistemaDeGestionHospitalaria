@@ -27,7 +27,6 @@ class Lista{
 
         // metodo para borrar un elemento de la lista dada su posicion
         void baja(int pos);
-
         // metodo para obtener el dato de una posicion
         T& consulta(int pos); 
         const T& consulta(int pos) const;

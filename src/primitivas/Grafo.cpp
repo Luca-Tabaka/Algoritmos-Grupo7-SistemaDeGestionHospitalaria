@@ -23,6 +23,21 @@ void Grafo::agregarArista(string origen, string destino, int peso){
     }
 }
 
+void Grafo::eliminarVertice(string eliminar){
+    NodoGrafo* vertice = buscarVertice(eliminar);
+    if (vertice==nullptr)
+    {
+        cout<<"No se encontro el vertice a eliminar";
+        return;
+    }
+        for(int i=1; i<=vertices.obtenerLargo(); i++){
+            NodoGrafo* vertice = &vertices.consulta(i);
+            if(vertice->getId() == eliminar){
+                vertices.baja(i);
+            }
+    }
+}
+
 void Grafo::verAdyacentes(string id){
     // recorro la lista de vertices
     for(int i=1; i<=vertices.obtenerLargo(); i++){

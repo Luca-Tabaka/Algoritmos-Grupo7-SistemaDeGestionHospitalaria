@@ -1,8 +1,9 @@
 #include"hospital.h"
 #include<iostream>
 #include<string>
+using namespace std;
 
-Hospital::Hospital(std:: string codigoHospital,std:: string nombre, std:: string ciudad, int capacidadCamas, Lista<std::string> especialidades,int personalMedico,double presupuestoAnual){
+Hospital::Hospital( string codigoHospital, string nombre,  string ciudad, int capacidadCamas, Lista<string> especialidades,int personalMedico,double presupuestoAnual){
     this->codigoHospital = codigoHospital;
     this->nombre = nombre;
     this->ciudad = ciudad;
@@ -14,20 +15,20 @@ Hospital::Hospital(std:: string codigoHospital,std:: string nombre, std:: string
 
 
 
-std::string Hospital::mostrarInformacion(){
-    std::string mensaje = "\n" + codigoHospital +": " + nombre + " - " + ciudad + " - capacidad:"
-    + std::to_string(capacidadCamas) + " - especialidades: ";
+string Hospital::mostrarInformacion(){
+    string mensaje = "\n" + codigoHospital +": " + nombre + " - " + ciudad + " - capacidad:"
+    + to_string(capacidadCamas) + " - especialidades: ";
 
-    for(int i = 0; i < especialidades.obtenerLargo(); i++){
-        mensaje += " - " + especialidades.consulta(i);
+    for(int i = 1; i <= especialidades.obtenerLargo(); i++){
+        mensaje += especialidades.consulta(i)+" - ";
     }
-    mensaje += " personal: " + std::to_string(personalMedico) + "presupuesto: $" + std::to_string(presupuestoAnual);
+    mensaje += " personal: " + to_string(personalMedico) + " presupuesto: $" + to_string(presupuestoAnual);
     return mensaje;
 }
 
-Paciente* Hospital::obtenerPaciente(std::string dni){
+Paciente* Hospital::obtenerPaciente(string dni){
     Paciente* paciente = nullptr;
-    for(int i = 1; i <pacientes.obtenerLargo();i++){
+    for(int i = 1; i <=pacientes.obtenerLargo();i++){
         paciente = pacientes.consulta(i);
         if(paciente->getDni() == dni){
             return paciente;
@@ -36,9 +37,9 @@ Paciente* Hospital::obtenerPaciente(std::string dni){
     return nullptr;
 }
 
-Lista<Turno*> Hospital::listarTurnosMedico(int idMedico){
+void Hospital::listarTurnosMedico(int idMedico){
     Lista<Turno*> turnosMedico;
-    for (int i = 1; i < turnos.obtenerLargo() ; i++)
+    for (int i = 1; i <= turnos.obtenerLargo() ; i++)
     {
         Turno* turno = turnos.consulta(i);
         if(turno->getIdMedico() == idMedico){
@@ -46,22 +47,49 @@ Lista<Turno*> Hospital::listarTurnosMedico(int idMedico){
         }
     }
 
-    //ORDENAR POR FECHA
-    return turnosMedico;
-}
-
-Lista<Turno*> Hospital::listarTurnosPaciente(std::string dniPaciente){
-    Lista<Turno*> turnosPaciente;
-    Paciente* paciente = obtenerPaciente(dniPaciente);
-
-    if(paciente == nullptr){
-        std::cout<<"No se encontro un paciente con ese dni";
+    if(turnosMedico.esVacia()){
+        cout<<"No se encontraron turnos"<< endl;
+        return;
     }
-    return turnosPaciente;
+    int largo = turnos.obtenerLargo();
+    for(int i=2; i<=largo; i++){
+        Turno* turno = turnos.consulta(i);
+        int j = i - 1;
+        while(j >= 1 && turnos.consulta(j)->getFecha() > turno->getFecha()){
+            turnos.consulta(j + 1) = turnos.consulta(j);
+            j--;
+            }
+        turnos.consulta(j + 1) = turno;
+    }    
+
+    for(int i=1; i<=turnosMedico.obtenerLargo();i++){
+        Turno* t = turnos.consulta(i);
+        t->imprimir();
+    }    
+} 
+
+void Hospital::listarTurnosPaciente(string dniPaciente){
+    Paciente* paciente = obtenerPaciente(dniPaciente);
+    if(paciente == nullptr){
+        cout<<"No se encontro un paciente con ese dni";
+    }
+
+    for(int i=1; i<=turnos.obtenerLargo();i++){
+        Turno* t = turnos.consulta(i);
+        if (t->getIdPaciente()==paciente->getIdPaciente()){
+           t->imprimir();
+        }
+    }
 }
 
-bool Hospital::tieneEspecialidad(std::string especialidad){
-    for(int i = 0;i < especialidades.obtenerLargo();i++){
+
+
+
+
+
+
+bool Hospital::tieneEspecialidad(string especialidad){
+    for(int i = 1 ;i <= especialidades.obtenerLargo();i++){
         if(especialidades.consulta(i) == especialidad){
             return true;
         }
@@ -69,10 +97,10 @@ bool Hospital::tieneEspecialidad(std::string especialidad){
     return false;
 }
 
-int Hospital::pacientesAtendidos(std::string fechaInicio, std::string fechaFin){
+int Hospital::pacientesAtendidos(string fechaInicio, string fechaFin){
     int atendidos = 0;
-    for(int i = 0; i < turnos.obtenerLargo(); i++){
-        std::string fecha = turnos.consulta(i)->getFecha();
+    for(int i = 1; i <= turnos.obtenerLargo(); i++){
+        string fecha = turnos.consulta(i)->getFecha();
        if(fechaInicio <=  fecha && fechaFin >= fecha){
         atendidos+=1;
        }
@@ -86,7 +114,7 @@ int Hospital::cantidadPacientes(){
 
 int Hospital::cantidadDeCamasDisponibles(){
     if(cantidadPacientes() > capacidadCamas){
-        return -1;
+        return 0;
     }
     return capacidadCamas - cantidadPacientes();
 }
@@ -96,19 +124,19 @@ bool Hospital::tieneSobrecarga(){
     return (pacientesAtendidos("2025-05-05","2025-05-12") > 20 || (cantidadDeCamasDisponibles() / capacidadCamas) <= 0.10f);
 }
 
-std::string Hospital::getNombre(){
+string Hospital::getNombre(){
     return nombre;
 }
-std:: string Hospital::getCodigoHospital(){
+ string Hospital::getCodigoHospital(){
     return codigoHospital;
 }
-std:: string Hospital::getCiudad(){
+ string Hospital::getCiudad(){
     return ciudad;
 }
 int Hospital::getCapacidadCamas(){
     return capacidadCamas;
 }
-Lista<std::string> Hospital::getEspecialidades(){
+Lista<string> Hospital::getEspecialidades(){
     return especialidades;
 }
 int Hospital::getPersonalMedico(){
@@ -116,4 +144,38 @@ int Hospital::getPersonalMedico(){
 }
 double Hospital::getPresupuestoAnual(){
     return presupuestoAnual;
+}
+
+void Hospital::agregarPaciente(Paciente* paciente){
+    pacientes.alta(paciente,1);
+}
+
+void Hospital::agregarTurno(Turno* turno){
+    turnos.alta(turno,1);
+}
+
+
+// lista de espera
+void Hospital:: agregarPacienteListaEspera(string dni){
+    Paciente* p = obtenerPaciente(dni);
+    if (p==nullptr)
+    {
+        cout<<"No se encontro el paciente a ingresar."<<endl;
+        return;
+    }
+    listaEspera.push(p);
+}
+void Hospital::cambiarPrioridadPaciente(string dni, int nuevaPrioridad){
+    Paciente* p = obtenerPaciente(dni);
+    if (p==nullptr)
+    {
+        cout<<"No se encontro el paciente a ingresar."<<endl;
+        return;
+    }
+    listaEspera.cambiarPrioridad(dni, nuevaPrioridad);
+}
+Paciente* Hospital::extraerPacienteListaEspera(){
+    Paciente* primero = listaEspera.primero();
+    listaEspera.pop();
+    return primero;
 }
