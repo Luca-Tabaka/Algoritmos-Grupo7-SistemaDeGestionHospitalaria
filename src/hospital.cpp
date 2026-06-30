@@ -81,12 +81,11 @@ void Hospital::listarTurnosPaciente(string dniPaciente){
         }
     }
 }
-
-
-
-
-
-
+void Hospital::cargaDerivacion(int capacidadMaxima){
+    Ambulancia amb = Ambulancia(capacidadMaxima);
+    amb.calcularCarga(insumos);
+    amb.mostrarMejor();
+}
 
 bool Hospital::tieneEspecialidad(string especialidad){
     for(int i = 1 ;i <= especialidades.obtenerLargo();i++){
@@ -109,7 +108,7 @@ int Hospital::pacientesAtendidos(string fechaInicio, string fechaFin){
 }
 
 int Hospital::cantidadPacientes(){
-    return turnos.obtenerLargo();
+    return pacientes.obtenerLargo();
 }
 
 int Hospital::cantidadDeCamasDisponibles(){
@@ -123,6 +122,34 @@ int Hospital::cantidadDeCamasDisponibles(){
 bool Hospital::tieneSobrecarga(){
     return (pacientesAtendidos("2025-05-05","2025-05-12") > 20 || (cantidadDeCamasDisponibles() / capacidadCamas) <= 0.10f);
 }
+
+
+
+// lista de espera
+void Hospital:: agregarPacienteListaEspera(string dni){
+    Paciente* p = obtenerPaciente(dni);
+    if (p==nullptr)
+    {
+        cout<<"No se encontro el paciente a ingresar."<<endl;
+        return;
+    }
+    listaEspera.push(p);
+}
+void Hospital::cambiarPrioridadPaciente(string dni, int nuevaPrioridad){
+    Paciente* p = obtenerPaciente(dni);
+    if (p==nullptr)
+    {
+        cout<<"No se encontro el paciente a ingresar."<<endl;
+        return;
+    }
+    listaEspera.cambiarPrioridad(dni, nuevaPrioridad);
+}
+Paciente* Hospital::extraerPacienteListaEspera(){
+    Paciente* primero = listaEspera.primero();
+    listaEspera.pop();
+    return primero;
+}
+
 
 string Hospital::getNombre(){
     return nombre;
@@ -152,30 +179,4 @@ void Hospital::agregarPaciente(Paciente* paciente){
 
 void Hospital::agregarTurno(Turno* turno){
     turnos.alta(turno,1);
-}
-
-
-// lista de espera
-void Hospital:: agregarPacienteListaEspera(string dni){
-    Paciente* p = obtenerPaciente(dni);
-    if (p==nullptr)
-    {
-        cout<<"No se encontro el paciente a ingresar."<<endl;
-        return;
-    }
-    listaEspera.push(p);
-}
-void Hospital::cambiarPrioridadPaciente(string dni, int nuevaPrioridad){
-    Paciente* p = obtenerPaciente(dni);
-    if (p==nullptr)
-    {
-        cout<<"No se encontro el paciente a ingresar."<<endl;
-        return;
-    }
-    listaEspera.cambiarPrioridad(dni, nuevaPrioridad);
-}
-Paciente* Hospital::extraerPacienteListaEspera(){
-    Paciente* primero = listaEspera.primero();
-    listaEspera.pop();
-    return primero;
 }

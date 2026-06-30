@@ -98,6 +98,10 @@ void Grafo::dijkstra(string origen,string destino){
     }
     
     NodoGrafo* verticeOrigen = buscarVertice(origen);
+    if(verticeOrigen == nullptr){
+        cout<< "No existe el vertice origen"<<endl;
+        return;
+    }
     Lista<Arista>& adyacentes = verticeOrigen->getAdyacentes();
     // inicializo las distancias y caminos de los adyacentes al origen
     for(int i=1; i<=adyacentes.obtenerLargo(); i++){
