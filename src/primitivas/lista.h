@@ -15,7 +15,10 @@ class Lista{
     public:
         // el constructor de lista
         Lista();
-
+        //constructor de copia
+        Lista(const Lista<T>& lista);
+        //operador asignacion
+        Lista<T>& operator=(const Lista<T>& lista);
         // metodo para agregar un nodo a la lista, con la posicion donde guardar
         void alta(const T& dato, int pos); 
 
@@ -27,17 +30,18 @@ class Lista{
 
         // metodo para obtener el dato de una posicion
         T& consulta(int pos); 
-
+        const T& consulta(int pos) const;
         // metodo para averiguar si en la lista hay elemenos
-        bool esVacia();
+        bool esVacia() const;
 
         // destructor de la lista
         ~Lista();
 
         // metodo para conseguir el largo de la lista
-        int obtenerLargo();
+        int obtenerLargo() const;
 
         void mostrarLista();
+        const Nodo<T>* obtenerNodo(int pos) const;
         Nodo<T>* obtenerNodo(int pos);
 
         void vaciar();

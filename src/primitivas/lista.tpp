@@ -7,7 +7,7 @@ Lista<T>::Lista(){
 }
 
 template<typename T>
-bool Lista<T>::esVacia()
+bool Lista<T>::esVacia() const
 {
     return (largo == 0);
 }
@@ -41,11 +41,26 @@ Nodo<T>* Lista<T>::obtenerNodo(int pos){
     }
     return auxiliar;
 }
+template<typename T>
+const Nodo<T>* Lista<T>::obtenerNodo(int pos) const{
+    const Nodo<T>* auxiliar = primero;
+    for(int i = 1; i < pos; i++){
+        auxiliar = auxiliar->obtenerSiguiente();
+    }
+    return auxiliar;
+}
 
 template<typename T>
 T& Lista<T>::consulta(int pos)
 {
     Nodo<T>* aux = obtenerNodo(pos);
+    return aux->obtenerDato();
+}
+
+template<typename T>
+const T& Lista<T>::consulta(int pos) const
+{
+    const Nodo<T>* aux = obtenerNodo(pos);
     return aux->obtenerDato();
 }
 
@@ -86,7 +101,7 @@ void Lista<T>::vaciar(){
 
 
 template<typename T>
-int Lista<T>::obtenerLargo()
+int Lista<T>::obtenerLargo() const
 {
     return largo;
 }
@@ -105,5 +120,26 @@ void Lista<T>::mostrarLista()
 
       cout<<"]"<<endl;
 }
+template <typename T>
+Lista<T>::Lista(const Lista<T>& lista){
+        primero = nullptr;
+        largo = 0;
+        
+        for(int i = 1; i <= lista.obtenerLargo();i++){
+            alta(lista.consulta(i),largo+1);
+        }
+}
+template <typename T>
+Lista<T>& Lista<T>::operator=(const Lista<T>& lista){
+    if(this != &lista){
+        vaciar();
+        for(int i = 1; i <= lista.obtenerLargo();i++){
+            alta(lista.consulta(i),largo+1);
+        }
+    }
+    return *this;
+
+}
+
 
 

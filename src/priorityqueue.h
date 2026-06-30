@@ -9,6 +9,7 @@ class PriorityQueue{
         Lista<Paciente*> listaEspera;
 
     public:
+        void cambiarPrioridad(string dni, int nuevaPrioridad);
         void push(Paciente* p);
 
         void pop();

@@ -1,24 +1,25 @@
 #ifndef PACIENTE_H_
 #define PACIENTE_H_
 #include<string>
-
+using namespace std;
 
 class Paciente{
     private:
-        std:: string codigoHospital;
+        string codigoHospital;
         int idPaciente;
-        std:: string dni;
-        std:: string fechaIngreso; // aca podria ser date quizas
-        std:: string diagnostico;
+        string dni;
+        string fechaIngreso; // aca podria ser date quizas
+        string diagnostico;
         int prioridad;
         float peso; 
     
     public:
-        std:: string getodigoHospital();
+        void cambiarPrioridad(int nuevaPrioridad);
+        string getodigoHospital();
         int getIdPaciente();
-        std:: string getDni();
-        std:: string getFechaIngreso(); // aca podria ser date quizas
-        std:: string getDiagnostico();
+        string getDni();
+        string getFechaIngreso(); // aca podria ser date quizas
+        string getDiagnostico();
         int getPrioridad();
         float getPeso();
 

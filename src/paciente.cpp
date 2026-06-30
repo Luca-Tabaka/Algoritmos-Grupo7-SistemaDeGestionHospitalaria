@@ -18,6 +18,10 @@
         int Paciente::getPrioridad(){
             return prioridad;
         }
+        void Paciente::cambiarPrioridad(int nuevaPrioridad){
+            prioridad = nuevaPrioridad;
+        }
+
         float Paciente::getPeso(){
             return peso;
         }

@@ -21,9 +21,11 @@ class Nodo{
 
         // obtengo el dato del nodo
         T& obtenerDato();
+        const T& obtenerDato() const;
 
         // obtengo el puntero al nodo que se encuentra en siguiente
         Nodo<T>* obtenerSiguiente();
+        const Nodo<T>* obtenerSiguiente() const;
 
 };
 #include"nodo.tpp"

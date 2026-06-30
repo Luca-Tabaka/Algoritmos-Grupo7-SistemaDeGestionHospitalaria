@@ -23,6 +23,16 @@ T& Nodo<T>::obtenerDato(){
 }
 
 template <typename T>
+const T& Nodo<T>::obtenerDato() const{
+    return dato;
+}
+
+template <typename T>
 Nodo<T>* Nodo<T>::obtenerSiguiente(){
+    return siguiente;
+}
+
+template <typename T>
+const Nodo<T>* Nodo<T>::obtenerSiguiente() const{
     return siguiente;
 }
