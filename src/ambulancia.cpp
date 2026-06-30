@@ -13,59 +13,55 @@ int Ambulancia::valorMaximoRestante(int i, Lista<Insumo*>& insumos){
 
 void Ambulancia::backtrackingPoda(int i, float pesoActual, int valorActual,Lista<Insumo*>& insumosHospital, Lista<Insumo*>& solucionParcial, int& nodosVisitados){
     int n = insumosHospital.obtenerLargo();
-    nodosVisitados++;
-    if(i>n){
+    nodosVisitados++;//calcula cuantos nodos se visitaron durante la ejecucion
+    if(i>n){//caso base, si llega al final de la lista, verifica la solucion y si es la mejor la guarda
         if(valorActual > mejorValor){
             mejorValor = valorActual;
             mejorSolucion = solucionParcial;
         }
         return;
     }
-
-    if(pesoActual > capacidadMaxima){
+    if(valorActual + valorMaximoRestante(i,insumosHospital) <= mejorValor){// si la rama actual no puede superar la mejor, poda
         return;
     }
-    if(valorActual + valorMaximoRestante(i,insumosHospital) <= mejorValor){
-        return;
-    }
-    Insumo* actual = insumosHospital.consulta(i);
+    Insumo* actual = insumosHospital.consulta(i);//se obtiene el siguiente elemento a revisar
     float peso = actual-> getPeso();
     int valor = actual-> getPrioridad();
 
-    backtrackingPoda(i+1, pesoActual,valorActual,insumosHospital,solucionParcial,nodosVisitados);
+    backtrackingPoda(i+1, pesoActual,valorActual,insumosHospital,solucionParcial,nodosVisitados);//se elige no incluir el objeto
 
-    if(pesoActual + peso <= capacidadMaxima){
+    if(pesoActual + peso <= capacidadMaxima){//Se elige incluir al objeto, solo si su peso no supera el limite de capacidad
         solucionParcial.alta(actual, 1);
         backtrackingPoda(i+1, pesoActual+peso,valorActual+valor,insumosHospital,solucionParcial,nodosVisitados);
-        solucionParcial.baja(1);
+        solucionParcial.baja(1);//cuando recorre toda la rama, lo retira
     }
 
 }
 void Ambulancia::backtrackingPuro(int i, float pesoActual, int valorActual,Lista<Insumo*>& insumosHospital, Lista<Insumo*>& solucionParcial, int& nodosVisitados){
     int n = insumosHospital.obtenerLargo();
-    nodosVisitados++;
-    if(i>n){
+    nodosVisitados++;//calcula cuantos nodos se visitaron durante la ejecucion
+    if(i>n){//caso base, si llega al final de la lista, verifica la solucion y si es la mejor la guarda
         if(valorActual > mejorValor){
             mejorValor = valorActual;
             mejorSolucion = solucionParcial;
         }
         return;
     }
-    Insumo* actual = insumosHospital.consulta(i);
+    Insumo* actual = insumosHospital.consulta(i);//se obtiene el siguiente elemento a revisar
     float peso = actual-> getPeso();
     int valor = actual-> getPrioridad();
 
-    backtrackingPuro(i+1, pesoActual,valorActual,insumosHospital,solucionParcial,nodosVisitados);
+    backtrackingPuro(i+1, pesoActual,valorActual,insumosHospital,solucionParcial,nodosVisitados);//se elige no incluir el objeto
 
     if(pesoActual + peso <= capacidadMaxima){
         solucionParcial.alta(actual, 1);
-        backtrackingPuro(i+1, pesoActual+peso,valorActual+valor,insumosHospital,solucionParcial,nodosVisitados);
-        solucionParcial.baja(1);
+        backtrackingPuro(i+1, pesoActual+peso,valorActual+valor,insumosHospital,solucionParcial,nodosVisitados);//Se elige incluir al objeto, pero solo si su peso no supera el limite de capacidad
+        solucionParcial.baja(1);//cuando recorre toda la rama, lo retira
     }
 
 }
 
-void Ambulancia::pruebaBacktracking(Lista<Insumo*>& insumosHospital){
+void Ambulancia::pruebaBacktracking(Lista<Insumo*>& insumosHospital){// comparacion de nodos visitados en ambas ejecuciones
     mejorValor = 0;
     mejorSolucion.vaciar();
     int nodosVisitados = 0;

@@ -32,7 +32,7 @@ NodoArbol* Arbol::insertar(NodoArbol* nodo, string diag, int frec){
 void Arbol::aumentarFrecuencia(string diag){
     NodoArbol* nodoBuscado = buscarDiagnostico(raiz,diag);
     if(nodoBuscado == nullptr){
-        cout<<"El diagnostico que ingresó no existe, no se puede incrementar frecuencia";
+        cout<<"El diagnostico que ingresó no existe, no se puede incrementar frecuencia"<<endl;
         return;
     }
     else{
@@ -92,11 +92,9 @@ void Arbol::mostrarDiagnosticos(NodoArbol* nodo){
 void Arbol::mostrarDiagnosticos(){
     mostrarDiagnosticos(raiz);
 }
-
 void Arbol::insertar(string diag, int frec){
     raiz = insertar(raiz,diag,frec);
 }
-
 NodoArbol* Arbol::eliminar(NodoArbol* nodo, int frec, string diag){
     if(nodo == nullptr){
         return nullptr;
@@ -133,7 +131,6 @@ NodoArbol* Arbol::eliminar(NodoArbol* nodo, int frec, string diag){
         nodo->cambiarDiagnostico(sucesor->getDiagnostico());
         //reemplaza los datos del nodo a eliminar con los del sucesor
         nodo->cambiarDer(eliminar(nodo->getDer(),sucesor->getFrecuencia(),sucesor->getDiagnostico()));//elimina al sucesor
-
     }
     return nodo;
 }

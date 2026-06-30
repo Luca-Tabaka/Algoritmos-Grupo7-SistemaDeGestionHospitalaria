@@ -96,10 +96,24 @@ void Grafo::dijkstra(string origen,string destino){
         distancias[i] = inf;
         caminos[i] = "";
     }
-    
+
+
+ 
     NodoGrafo* verticeOrigen = buscarVertice(origen);
     if(verticeOrigen == nullptr){
         cout<< "No existe el vertice origen"<<endl;
+        return;
+    }
+        int posDestino = -1;
+    // busco la posicion del destino en la lista de vertices
+    for(int i=1; i<=largo; i++){
+        if(vertices.consulta(i).getId() == destino){
+            posDestino = i;
+            break;
+        }
+    }
+    if(posDestino == -1){
+        cout<< "No existe el vertice destino"<<endl;
         return;
     }
     Lista<Arista>& adyacentes = verticeOrigen->getAdyacentes();
@@ -154,14 +168,7 @@ void Grafo::dijkstra(string origen,string destino){
             }
         }
     }
-    int posDestino = -1;
-    // busco la posicion del destino en la lista de vertices
-    for(int i=1; i<=largo; i++){
-        if(vertices.consulta(i).getId() == destino){
-            posDestino = i;
-            break;
-        }
-    }
+
     
     cout << "tiempo minimo: " << distancias[posDestino] << endl;
 
