@@ -1,32 +1,28 @@
-/*
- * nodoGrafo.h
- *
- *  Created on: 30 May 2026
- *      Author: xenbr
- */
-
-#ifndef NODOGRAFO_H_
-#define NODOGRAFO_H_
-#include<vector>
-#include"Arista.h"
-#include<string>
+#ifndef NODOGRAFO_H
+#define NODOGRAFO_H
+#include "arista.h"
+#include "lista.h"
 
 class NodoGrafo{
-	private:
-		std::string hospital;
-		std::vector<Arista> aristas;
-	public:
-		NodoGrafo(std::string h);
-		std::string getHospital();
-		//void setHospital(std::string h);
-		std::vector<Arista> getAristas();
-		void agregarArista(Arista a);
-		std::string toString();
+    private:
+        string id;
+        bool visitado;
+        Lista<Arista> adyacentes;
+
+    public:
+        NodoGrafo();
+        NodoGrafo(string id);
+        // metodo para conseguir el id identifcador del nodo
+        string getId();
+        // metodo para conseguir por referencia los adyacentes al nodo
+        Lista<Arista>& getAdyacentes();
+        // metodo para agregar una arista al listado de adyacencias
+        void agregarAdyacente(Arista arista);
+        // metodo para conseguir el estado del nodo
+        bool getVisitado();
+        // metodo para cambiar el estado del nodo
+        void setVisitado(bool estado);
 };
 
 
-
-#endif /* NODOGRAFO_H_ */
-
-
-
+#endif // NODOGRAFO_H

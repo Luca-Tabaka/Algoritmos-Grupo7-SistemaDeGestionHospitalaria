@@ -56,6 +56,7 @@ T& Lista<T>::consulta(int pos)
     Nodo<T>* aux = obtenerNodo(pos);
     return aux->obtenerDato();
 }
+
 template<typename T>
 const T& Lista<T>::consulta(int pos) const
 {
@@ -139,5 +140,6 @@ Lista<T>& Lista<T>::operator=(const Lista<T>& lista){
     return *this;
 
 }
+
 
 

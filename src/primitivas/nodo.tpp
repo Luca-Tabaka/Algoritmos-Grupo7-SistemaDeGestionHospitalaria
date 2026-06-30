@@ -21,6 +21,7 @@ template <typename T>
 T& Nodo<T>::obtenerDato(){
     return dato;
 }
+
 template <typename T>
 const T& Nodo<T>::obtenerDato() const{
     return dato;

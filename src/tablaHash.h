@@ -11,6 +11,7 @@ class TablaHash{
         int primerPrimoSuperior(int num);
         bool esPrimo(int num);
     public:
+        TablaHash();
         TablaHash(int cap);
         ~TablaHash();
         void vaciar();
