@@ -6,18 +6,6 @@ using namespace std;
         SistemaHospitalario::SistemaHospitalario(int cantidad) : listaHospitales(cantidad) {
         }
 
-        SistemaHospitalario::~SistemaHospitalario(){
-            for (int i = 0; i < listaHospitales.size(); i++)
-            {
-                Hospital* h = listaHospitales.obtenerHospitalCelda(i);
-                if (h!=nullptr)
-                {
-                    delete h;
-                }
-            }
-            
-
-        }
         //-------------------Hospitales-----------------------------------
         void SistemaHospitalario::consultarInformacionHospital(string codHospital){
             Hospital* hospital = listaHospitales.buscar(codHospital);
@@ -74,7 +62,7 @@ using namespace std;
 
 
 
-        void SistemaHospitalario::listarHospitales(int opcion){//opciones: 1 = camas totales, 2 = personal medico, 3 = presupuesto, 4 = disponibilidad de camas
+        void SistemaHospitalario::listarHospitales(int opcion){
             Lista<Hospital*> hospitales;
             for(int i=0; i<listaHospitales.size(); i++){
                 Hospital* hospital = listaHospitales.obtenerHospitalCelda(i);
@@ -131,8 +119,6 @@ using namespace std;
             cout<<"No hay hospitales con sobrecarga"<<endl;
             }
         }
-
-
         void SistemaHospitalario::reasignarPacientes(string origen){
             Lista<string> hospitales = hospitalesMasCercanos(origen);
             Hospital* hospital = getHospital(origen);

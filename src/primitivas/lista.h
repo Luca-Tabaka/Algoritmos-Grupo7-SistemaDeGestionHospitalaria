@@ -17,7 +17,7 @@ class Lista{
         Lista();
         //constructor de copia
         Lista(const Lista<T>& lista);
-        //operador asignacion
+        //operador asignacion/ crea una deep copy de la lista
         Lista<T>& operator=(const Lista<T>& lista);
         // metodo para agregar un nodo a la lista, con la posicion donde guardar
         void alta(const T& dato, int pos); 

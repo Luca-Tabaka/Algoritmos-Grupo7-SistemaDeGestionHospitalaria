@@ -18,11 +18,11 @@ class Arbol{
         void insertar(string diag, int frec);
         bool existeDiagnostico(string diag);
         void aumentarFrecuencia(string diag);
+        void eliminarDiagnostico(string diag);
+        void mostrarDiagnosticos();
         NodoArbol* diagnosticoMasFrecuente();
         bool estaDesbalanceado();
         int altura(NodoArbol* nodo);
-        void mostrarDiagnosticos();
-        void eliminarDiagnostico(string diag);
 
 };
 

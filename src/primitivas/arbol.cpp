@@ -107,25 +107,25 @@ void Arbol::insertar(string diag, int frec){
 NodoArbol* Arbol::eliminar(NodoArbol* nodo, int frec, string diag){
     if(nodo == nullptr){
         return nullptr;
-    }
+    } // revisa si la frecuencia es menor al nodo a eliminar busca en el subarbol izq/si son iguales desenpatan por diagnostico
     if(frec<nodo->getFrecuencia() || (frec==nodo->getFrecuencia() && diag < nodo->getDiagnostico())){
         nodo->cambiarIzq(eliminar(nodo->getIzq(),frec,diag));
-    }
+    } // revisa si la frecuencia es mayor al nodo a eliminar busca en el subarbol der/si son iguales desenpatan por diagnostico
     else if(frec > nodo->getFrecuencia()|| (frec==nodo->getFrecuencia() && diag > nodo->getDiagnostico())){
         nodo->cambiarDer(eliminar(nodo->getDer(),frec,diag));
     }
     else{
-        //hoja
+        //hoja/ si el nodo a eliminar es hoja se elimina y es reemplazado por nullptr
         if(nodo-> getIzq() == nullptr && nodo -> getDer() == nullptr){
             delete nodo;
             return nullptr;
         }
-        //tiene un solo hijo
+        //tiene un solo hijo der/ el padre es eliminado y el hijo lo reemplaza
         if(nodo->getIzq() == nullptr){
             NodoArbol* aux = nodo->getDer();
             delete nodo;
             return aux;
-        }
+        } // tiene un solo hijo izq/ el padre es eliminado y el hijo lo reemplaza
         if(nodo->getDer() == nullptr){
             NodoArbol* aux = nodo->getIzq();
             delete nodo;

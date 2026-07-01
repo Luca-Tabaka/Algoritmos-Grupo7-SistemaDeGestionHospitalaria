@@ -68,19 +68,19 @@ void Hospital::listarTurnosMedico(int idMedico){
         cout<<"No se encontraron turnos"<< endl;
         return;
     }
-    int largo = turnos.obtenerLargo();
+    int largo = turnosMedico.obtenerLargo();
     for(int i=2; i<=largo; i++){
-        Turno* turno = turnos.consulta(i);
+        Turno* turno = turnosMedico.consulta(i);
         int j = i - 1;
-        while(j >= 1 && turnos.consulta(j)->getFecha() > turno->getFecha()){
-            turnos.consulta(j + 1) = turnos.consulta(j);
+        while(j >= 1 && turnosMedico.consulta(j)->getFecha() > turno->getFecha()){
+            turnosMedico.consulta(j + 1) = turnosMedico.consulta(j);
             j--;
             }
-        turnos.consulta(j + 1) = turno;
+        turnosMedico.consulta(j + 1) = turno;
     }    
 
     for(int i=1; i<=turnosMedico.obtenerLargo();i++){
-        Turno* t = turnos.consulta(i);
+        Turno* t = turnosMedico.consulta(i);
         t->imprimir();
     }    
 } 

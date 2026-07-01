@@ -20,7 +20,6 @@ class SistemaHospitalario{
 
     public:
         SistemaHospitalario(int cantidad);
-        ~SistemaHospitalario();
         //hospitales
         Hospital* getHospital(string codHospital);
         void consultarInformacionHospital(string codHospital);
