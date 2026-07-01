@@ -131,17 +131,7 @@ using namespace std;
             cout<<"No hay hospitales con sobrecarga"<<endl;
             }
         }
-        Lista<Hospital*> SistemaHospitalario::hospitalesPorEspecialidad(string especialidad){
-            Lista<Hospital*> hospitales;
-            for(int i = 1;i <= listaHospitales.size();i++){
-                Hospital* actual = listaHospitales.obtenerHospitalCelda(i);
-                if(actual != nullptr && actual->tieneEspecialidad(especialidad)){
-                    hospitales.alta(actual);
-                }
-            }
 
-            return hospitales;
-        }
 
         void SistemaHospitalario::reasignarPacientes(string origen){
             Lista<string> hospitales = hospitalesMasCercanos(origen);

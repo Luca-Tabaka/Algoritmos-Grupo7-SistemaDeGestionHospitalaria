@@ -30,7 +30,6 @@ class SistemaHospitalario{
         void listarHospitalesPorEspecialidad(string especialidad);
         //lista calcularRutaDerivacion(string HospitalOrigen, string Hospitaldestino);
         void hospitalesConSobrecarga(string fecha);
-        Lista<Hospital*> hospitalesPorEspecialidad(string especialidad);
         void agregarEspecialidadesHospital(string codHospital);
         int obtenerLargoTablaHash();
         Hospital* obtenerHospitalCelda(int pos);
@@ -55,7 +54,6 @@ class SistemaHospitalario{
         void eliminarDiagnostico(string diag);
         void arbolDesbalanceado();
 
-        //Backtracking
 
 
 };
