@@ -28,6 +28,8 @@ class Hospital{
         
     public:
         Hospital( string codigoHospital, string nombre,  string ciudad, int capacidadCamas, Lista<string> especialidades,int personalMedico,double presupuestoAnual);
+        ~Hospital();
+        
         //GETTERS
         string getNombre();
         string getCodigoHospital();

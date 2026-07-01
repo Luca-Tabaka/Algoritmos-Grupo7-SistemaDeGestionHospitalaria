@@ -1,4 +1,6 @@
 #include "grafo.h"
+#include <iostream>
+#include <fstream>
 Grafo::Grafo(){}
 
 void Grafo::agregarVertice(string id){
@@ -10,7 +12,7 @@ void Grafo::agregarArista(string origen, string destino, int peso){
     //creo las aristas
     Arista aristaOrigen(destino, peso);
     Arista aristaDestino(origen, peso);
-
+    
     // encuentro el vertice al cual se le agrega
     for(int i=1; i<=vertices.obtenerLargo(); i++){
         NodoGrafo& vertice = vertices.consulta(i);
@@ -228,4 +230,32 @@ Lista<string>Grafo::hospitalesMasCercanos(string origen){
         vertice.setVisitado(true);
     }    
     return hospitales;
+}
+
+
+
+void Grafo::cargarDerivacionesATXT(){
+    ofstream archivo("archivosDeEntrada/derivaciones.txt"); 
+    if (archivo.fail()) {
+        cerr << "No se pudo abrir el archivo de derivaciones." << endl;
+        return;
+    }
+    //recorro la lista de vertices
+    for(int i=1; i<=vertices.obtenerLargo(); i++){
+        NodoGrafo& vertice = vertices.consulta(i);
+        //consigo los adyacentes
+        Lista<Arista>& adj = vertice.getAdyacentes();
+        //los voy escribiendo en el archivo
+        for (int i = 1; i <= adj.obtenerLargo(); i++)
+        {
+            Arista& arista = adj.consulta(i);
+
+            if (vertice.getId()<arista.getDestino())
+            {
+                archivo<< vertice.getId()<<""<<arista.getDestino()<<" "<<arista.getPeso()<<endl;
+            }  
+        }
+        
+    }    
+    archivo.close();
 }

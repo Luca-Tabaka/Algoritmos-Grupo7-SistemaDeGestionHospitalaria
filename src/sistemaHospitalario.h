@@ -2,7 +2,6 @@
 #define SISTEMAHOSPITALARIO_H_INCLUDED
 #include"turno.h"
 #include"tablaHash.h"
-#include"derivacion.h"
 #include"primitivas/lista.h"
 #include"primitivas/Grafo.h"
 #include"hospital.h"
@@ -12,8 +11,6 @@ using namespace std;
 class SistemaHospitalario{
     private:
         TablaHash listaHospitales;
-        Lista<Turno> turnos;
-        Lista<Derivacion*> listaDerivaciones;
         Arbol diagnosticos;
         Grafo grafoHospitales;
         bool compararHospitales(Hospital* h1, Hospital* h2, int opcion);
@@ -23,7 +20,7 @@ class SistemaHospitalario{
 
     public:
         SistemaHospitalario(int cantidad);
-
+        ~SistemaHospitalario();
         //hospitales
         Hospital* getHospital(string codHospital);
         void consultarInformacionHospital(string codHospital);
@@ -35,12 +32,19 @@ class SistemaHospitalario{
         void hospitalesConSobrecarga(string fecha);
         Lista<Hospital*> hospitalesPorEspecialidad(string especialidad);
         void agregarEspecialidadesHospital(string codHospital);
+        int obtenerLargoTablaHash();
+        Hospital* obtenerHospitalCelda(int pos);
+        void agregarPacientesDesdeTXT();
+        void agregarTurnosDesdeTXT();
+        void agregarInsumosDesdeTXT();
 
         //grafos
         void verGrafoHospitales();
         void conectarHospitales(string origen, string destino, int tiempo);
         void calcularCaminoHospitales(string origen, string destino);
         Lista<string> hospitalesMasCercanos(string origen);
+        void insertarDerivacionesATXT();
+        void agregarDerivacionesDesdeTXT();
 
         //diagnosticos
         void insertarDiagnostico(string diag, int frec);

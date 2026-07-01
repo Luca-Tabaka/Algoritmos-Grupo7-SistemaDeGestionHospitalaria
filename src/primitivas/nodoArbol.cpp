@@ -6,6 +6,18 @@ NodoArbol::NodoArbol(string diag, int frec){
     izq = nullptr;
     der = nullptr;
 }
+
+NodoArbol::~NodoArbol(){
+    if (izq!= nullptr)
+    {
+        delete izq;
+    }
+    if (der!= nullptr)
+    {
+        delete der;
+    }    
+}
+
 string NodoArbol::getDiagnostico(){
     return diagnostico;
 }

@@ -4,43 +4,6 @@ using namespace std;
 #include <iostream>
 #include <fstream>
 
-
-void agregarHospitalesDesdeTXT(TablaHash& listaHospitales) {
-    ifstream hospitales("archivosDeEntrada/hospitales.txt");
-    if (hospitales.fail()) {
-        cerr << "No se pudo abrir el archivo de hospitales." << endl;
-        return;
-    }
-    // armo variables para guardar los datos de la linea
-    string codigo, nombre, ciudad, especialidades;
-    int capacidadCamas, personalMedico;
-    double presupuesto;
-    //va leyendo el archivo hasta encontrar espacios y los agrega a las variables
-    while(hospitales>>codigo>>nombre>>ciudad>>capacidadCamas>>especialidades>>personalMedico>>presupuesto){
-        
-        Hospital* hospital = new Hospital(codigo, nombre, ciudad, capacidadCamas, Lista<std::string>(), personalMedico, presupuesto);
-        listaHospitales.insertar(hospital);
-
-    }
-}
-
-void insertarHospitalesEnTxt(TablaHash& listaHospitales) {
-    ofstream archivo("archivosDeEntrada/hospitales.txt", ios::app); 
-    if (archivo.fail()) {
-        cerr << "No se pudo abrir el archivo de hospitales." << endl;
-        return;
-    }
-
-    for (int i = 0; i < listaHospitales.size(); i++) {
-        Hospital* hos = listaHospitales.obtenerHospitalCelda(i);
-        if (hos != nullptr) {
-            archivo << hos->getCodigoHospital() << " " << hos->getNombre() << " " << hos->getCiudad() << " " << hos->getCapacidadCamas() << " " << hos->getPersonalMedico() << " " << hos->getPresupuestoAnual() << endl;
-        }
-    }
-    archivo.close();
-}
-
-
 int menuPrincipal(){
     int eleccion;
     cout<<"Menu de gestion de hospitales: "<<endl;
@@ -52,7 +15,7 @@ int menuPrincipal(){
     cout<<"6. Buscar hospitales por especialidad"<<endl;
     cout<<"7. Listar hospitales con sobrecarga"<<endl;
     cout<<"8. Gestionar Hospital"<<endl;
-    cout<<"8. Gestionar diagnosticos"<<endl;
+    cout<<"9. Gestionar diagnosticos"<<endl;
     cout<<"0. Volver"<<endl;
     cin>>eleccion;
     return eleccion;
@@ -98,7 +61,6 @@ int menuGestionDeDiagnosticos(){
     cin>>eleccion;
     return eleccion;
 }
-
 
 int menuInsumos(){
     int eleccion;
@@ -156,7 +118,7 @@ void ejecucionMenuGestionDePacientesyTurnos(Hospital* hospital){
      }
      case 5:{
         Paciente* p = hospital->extraerPacienteListaEspera();
-        cout<<"Paciente con DNI: " << p->getDni() <<" atendido";
+        cout<<"Paciente con DNI: " << p->getDni() <<" atendido"<<endl;
         break;
      }
      case 6:{
@@ -192,11 +154,12 @@ void ejecucionMenuInsumos(Hospital* hospital){
         int cargaMaxima;
         cout<<"Ingrese la carga maxima de la ambulancia:"<<endl;
         cin>>cargaMaxima;
+        hospital->cargaDerivacion(cargaMaxima);
          break;
      }
      case 2:{
         int cargaMaxima;
-        cout<<"Ingrese la carga maxima de la ambulancia para la comaparacion:"<<endl;
+        cout<<"Ingrese la carga maxima de la ambulancia para la comparacion:"<<endl;
         cin>>cargaMaxima;
         hospital->comparacionBacktracking(cargaMaxima);
         break;
@@ -302,6 +265,85 @@ void ejecucionMenuGestionDeDiagnosticos(SistemaHospitalario& sistemaPrincipal){
      }   
     } while(opcion != 0);
 }
+
+void agregarHospitalesDesdeTXT(SistemaHospitalario& sistema) {
+    ifstream hospitales("archivosDeEntrada/hospitales.txt");
+    if (hospitales.fail()) {
+        cerr << "No se pudo abrir el archivo de hospitales." << endl;
+        return;
+    }
+    // armo variables para guardar los datos de la linea
+    string codigo, nombre, ciudad, especialidadesSinSeparar;
+    int capacidadCamas, personalMedico;
+    double presupuesto;
+    //va leyendo el archivo hasta encontrar espacios y los agrega a las variables
+    while(hospitales>>codigo>>nombre>>ciudad>>capacidadCamas>>especialidadesSinSeparar>>personalMedico>>presupuesto){
+        
+        // armo la lista de especialidades separadas 
+        Lista<string> especialidades;
+        string actual ="";
+        for (size_t i = 0; i < especialidadesSinSeparar.length(); i++) //voy recorriendo char por char en especialidades
+        {
+            char c = especialidadesSinSeparar[i];
+            if (c==',')
+            {
+                especialidades.alta(actual); //agrego lo acumulado en actual
+                actual=""; // vacio el actual
+            }else{
+                actual+=c;
+            }
+        }
+        especialidades.alta(actual);
+        Hospital* hospital = new Hospital(codigo, nombre, ciudad, capacidadCamas, especialidades, personalMedico, presupuesto);
+        sistema.agregarHospital(hospital);
+    }
+}
+void insertarHospitalesEnTxt(SistemaHospitalario& sistema) {
+    ofstream archivo("archivosDeEntrada/hospitales.txt"); 
+    if (archivo.fail()) {
+        cerr << "No se pudo abrir el archivo de hospitales." << endl;
+        return;
+    }
+
+    for (int i = 0; i < sistema.obtenerLargoTablaHash(); i++) {
+        Hospital* hos = sistema.obtenerHospitalCelda(i);
+        if (hos != nullptr) {
+            archivo << hos->getCodigoHospital() << " " << hos->getNombre() << " " << hos->getCiudad() << " " << hos->getCapacidadCamas() << " ";
+            // consigo la lista de especialidades del hospital
+            const Lista<string>& especialidades = hos->getEspecialidades();
+            for (int i = 1; i <= especialidades.obtenerLargo(); i++)
+            {
+                // agrego especialidad al archivo
+                archivo<<especialidades.consulta(i);
+                if (i != especialidades.obtenerLargo())
+                {
+                    archivo<<","; // agrego coma si no es la ultima especialidad
+                }
+            }
+            archivo << " " << hos->getPersonalMedico() << " " << hos->getPresupuestoAnual() << endl; 
+        }
+    }
+    archivo.close();
+}
+
+int contarHospitalesTXT(){
+    ifstream hospitales("archivosDeEntrada/hospitales.txt");
+    if (hospitales.fail()) {
+        cerr << "No se pudo abrir el archivo de hospitales." << endl;
+        return 0;
+    }
+    int cantidad;
+    string l;
+    while (getline(hospitales,l))
+    {
+        cantidad++;
+    }
+    return cantidad;
+}
+
+
+
+
 void ejecucionMenuPrincipal(SistemaHospitalario& sistemaPrincipal){
 int opcion;
     do{
@@ -385,6 +427,7 @@ int opcion;
             
         }
     case 0:
+        insertarHospitalesEnTxt(sistemaPrincipal);
         cout<<"Salio del sistema"<<endl;
         break;
     default:
@@ -397,7 +440,12 @@ int opcion;
 
 
 int main(){
-    SistemaHospitalario sistemaPrincipal(100);
-    
+    SistemaHospitalario sistemaPrincipal(contarHospitalesTXT());
+    agregarHospitalesDesdeTXT(sistemaPrincipal);
+    sistemaPrincipal.agregarPacientesDesdeTXT();
+    sistemaPrincipal.agregarTurnosDesdeTXT();
+    sistemaPrincipal.agregarInsumosDesdeTXT();
+    sistemaPrincipal.agregarDerivacionesDesdeTXT();
+    sistemaPrincipal.verGrafoHospitales();
     ejecucionMenuPrincipal(sistemaPrincipal);
 }

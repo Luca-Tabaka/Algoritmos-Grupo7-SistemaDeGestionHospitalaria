@@ -22,6 +22,7 @@ class Grafo{
         void dijkstra(string origen, Lista<string>& caminos, Lista<int>& distancias);
         void calcularCamino(string origen, string destino);
         Lista<string> hospitalesMasCercanos(string origen);
+        void cargarDerivacionesATXT();
 };
 
 

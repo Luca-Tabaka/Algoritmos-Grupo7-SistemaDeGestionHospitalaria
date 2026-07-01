@@ -13,7 +13,24 @@ Hospital::Hospital(string codigoHospital, string nombre,  string ciudad, int cap
     this->presupuestoAnual = presupuestoAnual;
 }
 
-
+Hospital:: ~Hospital(){
+    for (int i = 1; i <= pacientes.obtenerLargo(); i++)
+    {
+        Paciente* p = pacientes.consulta(i);
+        delete p;
+    }
+    for (int i = 1; i <= turnos.obtenerLargo(); i++)
+    {
+        Turno* t = turnos.consulta(i);
+        delete t;
+    }   
+    
+    for (int i = 1; i <= insumos.obtenerLargo(); i++)
+    {
+        Insumo* in = insumos.consulta(i);
+        delete in;
+    }      
+}
 
 string Hospital::mostrarInformacion(){
     string mensaje = "\n" + codigoHospital +": " + nombre + " - " + ciudad + " - capacidad:"
@@ -36,7 +53,7 @@ Paciente* Hospital::obtenerPaciente(string dni){
     }
     return nullptr;
 }
-
+// no usa turnosMedico
 void Hospital::listarTurnosMedico(int idMedico){
     Lista<Turno*> turnosMedico;
     for (int i = 1; i <= turnos.obtenerLargo() ; i++)
@@ -72,8 +89,8 @@ void Hospital::listarTurnosPaciente(string dniPaciente){
     Paciente* paciente = obtenerPaciente(dniPaciente);
     if(paciente == nullptr){
         cout<<"No se encontro un paciente con ese dni";
+        return;
     }
-
     for(int i=1; i<=turnos.obtenerLargo();i++){
         Turno* t = turnos.consulta(i);
         if (t->getIdPaciente()==paciente->getIdPaciente()){
@@ -88,7 +105,6 @@ void Hospital::cargaDerivacion(int capacidadMax){
 }
 void Hospital::comparacionBacktracking(int capacidadMax){
     Ambulancia amb = Ambulancia(capacidadMax);
-    amb.calcularCarga(insumos);
     amb.pruebaBacktracking(insumos);
 }
 bool Hospital::tieneEspecialidad(string especialidad){
@@ -215,4 +231,8 @@ void Hospital::agregarEspecialidad(string especialidad){
 
 void Hospital::agregarTurno(Turno* turno){
     turnos.alta(turno,1);
+}
+
+void Hospital::agregarInsumo(Insumo* insumo){
+    insumos.alta(insumo);
 }

@@ -1,6 +1,5 @@
 #include"insumo.h"
-
-        Insumo::Insumo(int id, std::string nom, std::string codHos,float p,int pri){
+        Insumo::Insumo(int id, string nom, string codHos,float p,int pri){
             idInsumo = id;
             nombre = nom;
             codigoHospital = codHos;
@@ -10,10 +9,10 @@
     int Insumo::getId(){
         return idInsumo;
     }
-    std::string Insumo::getNombre(){
+    string Insumo::getNombre(){
         return nombre;
     }
-    std::string Insumo::getCodigoHospital(){
+    string Insumo::getCodigoHospital(){
         return  codigoHospital;
     }
     float Insumo::getPeso(){

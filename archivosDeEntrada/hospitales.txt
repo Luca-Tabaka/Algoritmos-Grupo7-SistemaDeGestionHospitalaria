@@ -1,2 +1,7 @@
-HGA HospitalGarrahan BuenosAires 500 Pediatria,Cardiologia 320 15000000
-HIT HospitalItaliano Cordoba 300 Traumatologia,Neurologia 190 9000000
+HGA HospitalGarrahan BuenosAires 500 Pediatria,Cardiologia 320 1.5e+07
+HIT HospitalItaliano Cordoba 300 Traumatologia,Neurologia 190 9e+06
+HPE HospitalPenna BahiaBlanca 180 Pediatria,Obstetricia 95 5e+06
+HBR HospitalBritanico Rosas 200 Oncologia,Neurologia 110 8.5e+06
+HCL HospitalClinicas BuenosAires 450 Internacion,Urgencias 280 1.2e+07
+HCO HospitalCordova Mendoza 250 Cardiologia,Clinica 140 7.5e+06
+HMA HospitalMadariaga Posadas 220 Traumatologia,Quemados 130 6.8e+06

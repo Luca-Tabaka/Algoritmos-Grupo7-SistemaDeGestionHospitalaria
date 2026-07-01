@@ -1,5 +1,6 @@
 #include "nodoGrafo.h"
 NodoGrafo::NodoGrafo(){}
+
 NodoGrafo::NodoGrafo(string id){
     this->id = id;
     this->visitado = false;

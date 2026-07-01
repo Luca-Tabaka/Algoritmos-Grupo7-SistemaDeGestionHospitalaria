@@ -1,10 +1,23 @@
 #include"sistemaHospitalario.h"
 #include<iostream>
 #include<ctime>
+#include <fstream>
 using namespace std;
         SistemaHospitalario::SistemaHospitalario(int cantidad) : listaHospitales(cantidad) {
         }
 
+        SistemaHospitalario::~SistemaHospitalario(){
+            for (int i = 0; i < listaHospitales.size(); i++)
+            {
+                Hospital* h = listaHospitales.obtenerHospitalCelda(i);
+                if (h!=nullptr)
+                {
+                    delete h;
+                }
+            }
+            
+
+        }
         //-------------------Hospitales-----------------------------------
         void SistemaHospitalario::consultarInformacionHospital(string codHospital){
             Hospital* hospital = listaHospitales.buscar(codHospital);
@@ -195,7 +208,7 @@ using namespace std;
                 diagnosticos.insertar(diag,1);
             }
             else{
-                cout<<"El diagnostico que ingresó ya tiene una frecuencia asignada"<<endl;
+                diagnosticos.aumentarFrecuencia(diag);
             }
         }
 
@@ -244,6 +257,8 @@ using namespace std;
                 return h1->getPresupuestoAnual() < h2->getPresupuestoAnual();
             case 4: // disponibilidad de camas
                 return h1->cantidadDeCamasDisponibles() < h2->cantidadDeCamasDisponibles();
+            default:
+                return false;
             }
         }
 
@@ -264,3 +279,82 @@ using namespace std;
             }
         }
 
+    void SistemaHospitalario::insertarDerivacionesATXT(){
+            grafoHospitales.cargarDerivacionesATXT();
+        }
+
+    void SistemaHospitalario::agregarDerivacionesDesdeTXT(){
+        ifstream derivaciones("archivosDeEntrada/derivaciones.txt");
+        if (derivaciones.fail()) {
+            cerr << "No se pudo abrir el archivo de derivaciones." << endl;
+            return;
+        }       
+        
+        string origen,destino;
+        int tiempo;
+        while(derivaciones>>origen>>destino>>tiempo){
+            grafoHospitales.agregarArista(origen,destino,tiempo);
+        }
+    }
+
+    void SistemaHospitalario::agregarPacientesDesdeTXT(){
+        ifstream pacientes("archivosDeEntrada/pacientes.txt");
+        if (pacientes.fail()) {
+            cerr << "No se pudo abrir el archivo de pacientes." << endl;
+            return;
+        }            
+        //HGA 8001 30123456 20250310 Fractura 3 72.5
+        //Paciente(string codigoHospital, int idPaciente, string dni, string fechaIngreso, string diagnostico, int prioridad, float peso)
+        string codHospital,dni,fecha,diagnostico;
+        int id,prioridad;
+        float peso;
+        while (pacientes>>codHospital>>id>>dni>>fecha>>diagnostico>>prioridad>>peso)
+        {
+            Hospital* h = listaHospitales.buscar(codHospital);
+            Paciente* paciente = new Paciente (codHospital,id, dni, fecha, diagnostico, prioridad, peso);
+            h->agregarPaciente(paciente);
+            insertarDiagnostico(diagnostico);
+        }
+    }
+
+    void SistemaHospitalario::agregarTurnosDesdeTXT(){
+        ifstream turnos("archivosDeEntrada/turnos.txt");
+        if (turnos.fail()) {
+            cerr << "No se pudo abrir el archivo de turnos." << endl;
+            return;
+        }            
+        int id,idp,idm, tiempo;
+        string codh, fecha, especialidad;
+        while (turnos>>codh>>id>>idp>>idm>>fecha>>especialidad>>tiempo)
+        {
+            Hospital* h = listaHospitales.buscar(codh);
+            Turno* turno = new Turno(id, codh, idp, idm, fecha, especialidad, tiempo);
+            h->agregarTurno(turno);
+        }
+    }    
+        int SistemaHospitalario::obtenerLargoTablaHash(){
+            return listaHospitales.size();
+        }
+
+        Hospital* SistemaHospitalario::obtenerHospitalCelda(int pos){
+            return listaHospitales.obtenerHospitalCelda(pos);
+        }
+
+    void SistemaHospitalario::agregarInsumosDesdeTXT(){
+        ifstream insumos("archivosDeEntrada/insumos.txt");
+        if (insumos.fail()) {
+            cerr << "No se pudo abrir el archivo de insumos." << endl;
+            return;
+        }            
+        //int id, string nom, string codHos,float p,int pri
+        int id,pri;
+        string nombre, codh;
+        float peso;
+        while (insumos>>id>>nombre>>codh>>peso>>pri)
+        {
+            Hospital* h = listaHospitales.buscar(codh);
+            Insumo* insumo = new Insumo(id,nombre,codh,peso,pri);
+            h->agregarInsumo(insumo);
+        }
+    }    
+ 

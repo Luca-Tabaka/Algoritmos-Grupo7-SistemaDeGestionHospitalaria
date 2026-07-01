@@ -92,6 +92,7 @@ float Ambulancia::getCapacidad() const{
 void Ambulancia::mostrarMejor(){
     if(mejorSolucion.esVacia()){
         cout<<"La ambulancia no tiene ninguna carga";
+        return;
     }
     for(int i = 1;i <= mejorSolucion.obtenerLargo();i++){
         Insumo* insumoActual = mejorSolucion.consulta(i);

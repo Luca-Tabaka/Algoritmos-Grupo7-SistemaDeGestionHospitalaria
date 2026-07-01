@@ -2,6 +2,15 @@
 #include<cmath>
 #include<iostream>
 #include<algorithm>
+
+Arbol::Arbol(){
+    raiz = nullptr;
+}
+Arbol::~Arbol(){
+    if(raiz != nullptr){
+        delete raiz;
+    }
+}
 NodoArbol* Arbol::obtenerRaiz(){
     return raiz;
 }

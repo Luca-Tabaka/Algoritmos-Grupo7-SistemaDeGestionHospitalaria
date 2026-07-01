@@ -1,19 +1,20 @@
 #ifndef INSUMO_H_INCLUDED
 #define INSUMO_H_INCLUDED
 #include<string>
+using namespace std;
 
 class Insumo{
     private:
         int idInsumo;
-        std::string nombre;
-        std::string codigoHospital;
+        string nombre;
+        string codigoHospital;
         float peso;
         int prioridad;
     public:
-        Insumo(int id, std::string nom, std::string codHos,float p,int pri);
+        Insumo(int id, string nom, string codHos,float p,int pri);
         int getId();
-        std::string getNombre();
-        std::string getCodigoHospital();
+        string getNombre();
+        string getCodigoHospital();
         float getPeso();
         int getPrioridad();
 };

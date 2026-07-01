@@ -13,7 +13,7 @@ class NodoArbol{
         NodoArbol* der;
 
     public:
-
+        ~NodoArbol();
         NodoArbol(string diag, int frec);
         string getDiagnostico();
         int getFrecuencia();

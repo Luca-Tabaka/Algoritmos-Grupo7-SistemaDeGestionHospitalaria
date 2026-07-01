@@ -10,9 +10,8 @@ class Arbol{
         NodoArbol* minimo(NodoArbol* nodo);
         NodoArbol* eliminar(NodoArbol* nodo, int frec, string diag);
     public:
-        Arbol(){
-            raiz = nullptr;
-        }
+        Arbol();
+        ~Arbol();
         NodoArbol* obtenerRaiz();
         void cambiarRaiz(NodoArbol* raiz);
 
