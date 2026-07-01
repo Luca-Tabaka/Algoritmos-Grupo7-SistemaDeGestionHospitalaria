@@ -104,13 +104,204 @@ int menuInsumos(){
     int eleccion;
     cout<<"Menu de gestion de insumos: "<<endl;
     cout<<"1. Calcular carga de ambulancia"<<endl;
-    cout<<"2. Listar insumos"<<endl;
-    cout<<"3. Comparar funciones de backtracking"<<endl;
+    cout<<"2. Comparar funciones de backtracking"<<endl;
     cout<<"0. Volver"<<endl;
     cin>>eleccion;
     return eleccion;
 }
 
+
+//Hospital
+
+
+void ejecucionMenuGestionDePacientesyTurnos(Hospital* hospital){
+    int opcion;
+    do{
+    opcion = menuGestionDePacientesyTurnos();
+     switch (opcion)
+     {
+     case 1:{
+        string fecha1,fecha2;
+        cout<<"Ingrese la primera fecha:"<<endl;
+        cin>>fecha1;
+        cout<<"Ingrese la segunda fecha:" <<endl;
+        cin>>fecha2;
+
+        int cantidad = hospital->pacientesAtendidos(fecha1,fecha2);
+
+        cout<<"Pacientes atendidos en el rango de fechas: " << cantidad << endl;
+         break;
+     }
+     case 2:{
+        string dni;
+        cout<<"Ingrese el dni del paciente:"<<endl;
+        cin>>dni;
+
+        hospital->listarTurnosPaciente(dni);
+        break;
+     }
+     case 3:{
+        int id;
+        cout<<"Ingrese el id del medico:"<<endl;
+        cin>>id;
+        hospital->listarTurnosMedico(id);
+        break;
+     }
+     case 4:{
+        string dni;
+        cout<<"Ingrese el dni del paciente:"<<endl;
+        cin>>dni;
+        hospital->agregarPacienteListaEspera(dni);
+        break;
+     }
+     case 5:{
+        Paciente* p = hospital->extraerPacienteListaEspera();
+        cout<<"Paciente con DNI: " << p->getDni() <<" atendido";
+        break;
+     }
+     case 6:{
+        string dni;
+        cout<<"Ingrese el dni del paciente:"<<endl;
+        cin>>dni;
+        int nuevaPrioridad;
+        cout<<"Ingrese la nueva prioridad del paciente:"<<endl;
+        cin>>nuevaPrioridad;
+        hospital->cambiarPrioridadPaciente(dni,nuevaPrioridad);
+        break;
+     }
+    case 0:
+        cout<<"Volviendo al menu de hospital."<<endl;
+        break;
+    default:
+        cout<<"Opcion no valida, elija nuevamente."<<endl;
+        break;
+     }   
+    } while(opcion != 0);
+}
+void ejecucionMenuInsumos(Hospital* hospital){
+// fin hospital
+
+
+
+    int opcion;
+    do{
+    opcion = menuInsumos();
+     switch (opcion)
+     {
+     case 1:{
+        int cargaMaxima;
+        cout<<"Ingrese la carga maxima de la ambulancia:"<<endl;
+        cin>>cargaMaxima;
+         break;
+     }
+     case 2:{
+        int cargaMaxima;
+        cout<<"Ingrese la carga maxima de la ambulancia para la comaparacion:"<<endl;
+        cin>>cargaMaxima;
+        hospital->comparacionBacktracking(cargaMaxima);
+        break;
+     }
+        
+    case 0:
+        cout<<"Volviendo al menu de hospital."<<endl;
+        break;
+    default:
+        cout<<"Opcion no valida, elija nuevamente."<<endl;
+        break;
+     }   
+    } while(opcion != 0);
+}
+
+void ejecucionMenuHospital(SistemaHospitalario& sistemaPrincipal){
+    string codHospital;
+    cout<<"Ingrese el hospital a gestionar"<<endl;
+    cin>>codHospital;
+    Hospital* hospital = sistemaPrincipal.getHospital(codHospital);
+    if (hospital==nullptr)
+    {
+        cout<<"No se encontro el hospital a gestionar."<<endl;
+        return;
+    }
+    int opcion;
+    do{
+    opcion = menuHospital();
+     switch (opcion)
+     {
+     case 1:{
+        ejecucionMenuGestionDePacientesyTurnos(hospital);
+         break;
+     }
+     case 2:{
+        ejecucionMenuInsumos(hospital);
+         break;
+     }
+        
+     
+    case 0:
+        cout<<"Volviendo al menu principal."<<endl;
+        break;
+    default:
+        cout<<"Opcion no valida, elija nuevamente."<<endl;
+        break;
+     }   
+    } while (opcion != 0);
+    
+}
+
+void ejecucionMenuGestionDeDiagnosticos(SistemaHospitalario& sistemaPrincipal){
+    int opcion;
+    do{
+    opcion = menuGestionDeDiagnosticos();
+     switch (opcion)
+     {
+     case 1:{
+        string diagnostico;
+        cout<<"Ingrese un diagnostico:"<<endl;
+        cin>>diagnostico;
+        int frecuencia;
+        cout<<"Ingrese la frecuencia:"<<endl;
+        cin>>frecuencia;
+
+        sistemaPrincipal.insertarDiagnostico(diagnostico,frecuencia);
+        break;
+     }
+
+    case 2:{
+        string diagnostico;
+        cout<<"Ingrese un diagnostico:"<<endl;
+        cin>>diagnostico;
+        sistemaPrincipal.eliminarDiagnostico(diagnostico);
+        break;
+     }
+     case 3:{
+        sistemaPrincipal.listarDiagnosticos();
+        break;
+     }
+     case 4:{
+        string diagnostico;
+        cout<<"Ingrese un diagnostico:"<<endl;
+        cin>>diagnostico;
+        sistemaPrincipal.incrementarFrecuencia(diagnostico);
+        break;
+     }
+     case 5:{
+        sistemaPrincipal.diagnosticoMasFrecuente();
+        break;
+     }
+     case 6:{
+        sistemaPrincipal.arbolDesbalanceado();
+        break;
+     }
+        
+    case 0:
+        cout<<"Volviendo al menu de hospital."<<endl;
+        break;
+    default:
+        cout<<"Opcion no valida, elija nuevamente."<<endl;
+        break;
+     }   
+    } while(opcion != 0);
+}
 void ejecucionMenuPrincipal(SistemaHospitalario& sistemaPrincipal){
 int opcion;
     do{
@@ -185,11 +376,11 @@ int opcion;
             break;
         }    
         case 8:{
-            menuHospital();
+            ejecucionMenuHospital(sistemaPrincipal);
             break;
         }    
         case 9:{
-            menuGestionDeDiagnosticos();
+            ejecucionMenuGestionDeDiagnosticos(sistemaPrincipal);
             break;
             
         }
@@ -203,120 +394,6 @@ int opcion;
 } while (opcion != 0);
 }
 
-
-//Hospital
-void ejecucionMenuHospital(SistemaHospitalario& sistemaPrincipal){
-    string codHospital;
-    cout<<"Ingrese el hospital a gestionar"<<endl;
-    cin>>codHospital;
-    Hospital* hospital = sistemaPrincipal.getHospital(codHospital);
-    if (hospital==nullptr)
-    {
-        cout<<"No se encontro el hospital a gestionar."<<endl;
-        return;
-    }
-    int opcion;
-    do{
-    opcion = menuHospital();
-     switch (opcion)
-     {
-     case 1:{
-         
-         break;
-     }
-        
-     
-    case 0:
-        cout<<"Volviendo al menu principal."<<endl;
-        break;
-    default:
-        cout<<"Opcion no valida, elija nuevamente."<<endl;
-        break;
-     }   
-    } while (opcion != 0);
-    
-}
-
-void ejecucionMenuGestionDePacientesyTurnos(SistemaHospitalario& sistemaPrincipal, Hospital* hospital){
-    int opcion;
-    do{
-    opcion = menuGestionDePacientesyTurnos();
-     switch (opcion)
-     {
-     case 1:{
-         
-         break;
-     }
-        
-     
-    case 0:
-        cout<<"Volviendo al menu de hospital."<<endl;
-        break;
-    default:
-        cout<<"Opcion no valida, elija nuevamente."<<endl;
-        break;
-     }   
-    } while(opcion != 0);
-}
-void ejecucionMenuInsumos(SistemaHospitalario& sistemaPrincipal, Hospital* hospital){
-// fin hospital
-
-
-
-    int opcion;
-    do{
-    opcion = menuInsumos();
-     switch (opcion)
-     {
-     case 1:{
-         
-         break;
-     }
-        
-     
-    case 0:
-        cout<<"Volviendo al menu de hospital."<<endl;
-        break;
-    default:
-        cout<<"Opcion no valida, elija nuevamente."<<endl;
-        break;
-     }   
-    } while(opcion != 0);
-}
-
-// fin hospital
-
-
-void ejecucionMenuGestionDeDiagnosticos(SistemaHospitalario& sistemaPrincipal){
-    int opcion;
-    do{
-    opcion = menuGestionDeDiagnosticos();
-     switch (opcion)
-     {
-     case 1:{
-        string diagnostico;
-        cout<<"Ingrese un diagnostico:"<<endl;
-        cin>>diagnostico;
-        int frecuencia;
-        cout<<"Ingrese la frecuencia:"<<endl;
-        cin>>frecuencia;
-
-        sistemaPrincipal.insertarDiagnostico(diagnostico,frecuencia);
-        break;
-     }
-
-    case 2:
-        
-     
-    case 0:
-        cout<<"Volviendo al menu de hospital."<<endl;
-        break;
-    default:
-        cout<<"Opcion no valida, elija nuevamente."<<endl;
-        break;
-     }   
-    } while(opcion != 0);
-}
 
 
 int main(){

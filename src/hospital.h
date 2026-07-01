@@ -50,6 +50,7 @@ class Hospital{
         void listarTurnosPaciente(string dniPaciente);
 
         void cargaDerivacion(int capacidadMax);
+        void comparacionBacktracking(int capacidadMax);
 
         void agregarEspecialidad(string especialidad);
         void agregarTurno(Turno* turno);

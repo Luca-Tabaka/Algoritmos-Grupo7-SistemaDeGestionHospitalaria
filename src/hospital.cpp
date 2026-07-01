@@ -81,12 +81,16 @@ void Hospital::listarTurnosPaciente(string dniPaciente){
         }
     }
 }
-void Hospital::cargaDerivacion(int capacidadMaxima){
-    Ambulancia amb = Ambulancia(capacidadMaxima);
+void Hospital::cargaDerivacion(int capacidadMax){
+    Ambulancia amb = Ambulancia(capacidadMax);
     amb.calcularCarga(insumos);
     amb.mostrarMejor();
 }
-
+void Hospital::comparacionBacktracking(int capacidadMax){
+    Ambulancia amb = Ambulancia(capacidadMax);
+    amb.calcularCarga(insumos);
+    amb.pruebaBacktracking(insumos);
+}
 bool Hospital::tieneEspecialidad(string especialidad){
     for(int i = 1 ;i <= especialidades.obtenerLargo();i++){
         if(especialidades.consulta(i) == especialidad){

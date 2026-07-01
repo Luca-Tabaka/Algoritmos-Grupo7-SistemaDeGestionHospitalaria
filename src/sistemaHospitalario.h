@@ -20,7 +20,6 @@ class SistemaHospitalario{
         void insertionSort(Lista<Hospital*>& hospitales, int opcion);
         void reasignarPacientes(string origen);
         void trasladarPaciente(string origen,string destino);
-        string semanaAnterior(string fecha);
 
     public:
         SistemaHospitalario(int cantidad);
@@ -37,8 +36,6 @@ class SistemaHospitalario{
         Lista<Hospital*> hospitalesPorEspecialidad(string especialidad);
         void agregarEspecialidadesHospital(string codHospital);
 
-        //turnos
-
         //grafos
         void verGrafoHospitales();
         void conectarHospitales(string origen, string destino, int tiempo);
@@ -53,6 +50,9 @@ class SistemaHospitalario{
         void listarDiagnosticos();
         void eliminarDiagnostico(string diag);
         void arbolDesbalanceado();
+
+        //Backtracking
+
 
 };
 
